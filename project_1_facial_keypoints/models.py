@@ -51,29 +51,29 @@ class Net(nn.Module):
             ('bachnorm1', nn.BatchNorm2d(32))]))
             # Output dimensions:
             # channels_out = 32
-            # height_out = 244 - 5 + 1 = 240
-            # width_out = 244 - 5 + 1 = 240
-            # weights_out = 240 * 240 * 32 = 1 843 200
+            # height_out = 224 - 5 + 1 = 220
+            # width_out = 224 - 5 + 1 = 220
+            # weights_out = 220 * 220 * 32 = 1 548 800
         
         self.layer2 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2,2))]))
             # Output dimensions:
             # channels_out = 32
-            # height_out = (240 - 2)/2 + 1 = 121
-            # width_out = (240 - 2)/2 + 1 = 121
-            # weights_out = 121 * 121 * 32 =  468 512
+            # height_out = (220 - 2)/2 + 1 = 110
+            # width_out = (220 - 2)/2 + 1 = 110
+            # weights_out = 110 * 110 * 32 =  387 200
         
         self.layer3 = nn.Sequential(OrderedDict([
             ('conv2', nn.Conv2d(32, 16, kernel_size=5)),
             ('relu2', nn.ReLU())]))
             # Output dimensions:
             # channels_out = 16
-            # height_out = 121 - 5 + 1 = 117
-            # width_out = 121 - 5 + 1 = 117
-            # weights_out = 117 * 117 * 16 =  219 024
+            # height_out = 110 - 5 + 1 = 106
+            # width_out = 110 - 5 + 1 = 106
+            # weights_out = 106 * 106 * 16 =  179 776
         
         self.layer4 = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(117*117*16,544)),
+            ('fc1', nn.Linear(106*106*16,544)),
             ('relu3', nn.ReLU()),
             ('dropout4',  nn.Dropout(0.4))]))
         
