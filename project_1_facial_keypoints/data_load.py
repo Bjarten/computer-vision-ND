@@ -7,6 +7,8 @@ import matplotlib.image as mpimg
 import pandas as pd
 import cv2
 
+import random
+
 
 class FacialKeypointsDataset(Dataset):
     """Face Landmarks dataset."""
@@ -139,7 +141,17 @@ class RandomCrop(object):
         key_pts = key_pts - [left, top]
 
         return {'image': image, 'keypoints': key_pts}
+    
+class RandomVerticalFlip(object):
+    """Random vertical flip of image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
 
+        if random.choice([0, 1]) < .5:
+            image = np.fliplr(image)
+            key_pts = np.fliplr(key_pts)
+
+        return {'image': image, 'keypoints': key_pts}
 
 class ToTensor(object):
     """Convert ndarrays in sample to Tensors."""
