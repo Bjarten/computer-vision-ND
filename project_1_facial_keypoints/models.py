@@ -22,32 +22,68 @@ class Net(nn.Module):
         # As an example, you've been given a convolutional layer, which you may (but don't have to) change:
         # 1 input image channel (grayscale), 32 output channels/feature maps, 5x5 square convolution kernel
         # self.conv1 = nn.Conv2d(1, 32, 5)
-        
+
+        # *** Conv2d output dimensions ***
+        # height_out = (height_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+        # width_out = (width_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+        # weights_out = height_out * width_out * channels_out
+        #
+        # With values: strid = 1, padding = 0, dilation = 1
+        # height_out = height_in - kernel_size + 1
+        # width_out = width_in - kernel_size + 1
+        #
+        # *** MaxPool2d output dimensions ***
+        #
+        # height_out = (height_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+        # width_out = (width_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+        # weights_out = height_out * width_out * channels_out
+        #
+        # With values: strid = 2, padding = 0, dilation = 1
+        # height_out = (height_in - kernel_size)/2 + 1
+        # width_out = (width_in - kernel_size)/2 + 1
+        #
+        #
+
         self.layer1 = nn.Sequential(
             OrderedDict([
             ('conv1', nn.Conv2d(1, 32, kernel_size=5)),
             ('relu1',nn.ReLU()),
-            ('bachnorm1', nn.BatchNorm2d(10))]))
+            ('bachnorm1', nn.BatchNorm2d(32))]))
+            # Output dimensions:
+            # channels_out = 32
+            # height_out = 244 - 5 + 1 = 240
+            # width_out = 244 - 5 + 1 = 240
+            # weights_out = 240 * 240 * 32 = 1 843 200
         
         self.layer2 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2,2))]))
+            # Output dimensions:
+            # channels_out = 32
+            # height_out = (240 - 2)/2 + 1 = 121
+            # width_out = (240 - 2)/2 + 1 = 121
+            # weights_out = 121 * 121 * 32 =  468 512
         
         self.layer3 = nn.Sequential(OrderedDict([
-            ('conv2', nn.Conv2d(10, 10, kernel_size=3)),
+            ('conv2', nn.Conv2d(32, 16, kernel_size=5)),
             ('relu2', nn.ReLU())]))
+            # Output dimensions:
+            # channels_out = 16
+            # height_out = 121 - 5 + 1 = 117
+            # width_out = 121 - 5 + 1 = 117
+            # weights_out = 117 * 117 * 16 =  219 024
         
         self.layer4 = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(11*11*10,100 )),
+            ('fc1', nn.Linear(117*117*16,544)),
             ('relu3', nn.ReLU()),
             ('dropout4',  nn.Dropout(0.4))]))
         
         self.layer5 = nn.Sequential(OrderedDict([
-            ('fc2', nn.Linear(100, 50)),
+            ('fc2', nn.Linear(544, 272)),
             ('relu4', nn.ReLU()),
             ('dropout4',  nn.Dropout(0.4))]))
         
         self.layer6 = nn.Sequential(OrderedDict([
-            ('fc3', nn.Linear(50, 10)),
+            ('fc3', nn.Linear(272, 136)),
             ('relu5', nn.ReLU())]))
         
         ## Note that among the layers to add, consider including:
