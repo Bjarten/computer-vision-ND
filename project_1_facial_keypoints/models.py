@@ -68,3 +68,12 @@ class Net(nn.Module):
         out = self.layer6(out)
         # final output
         return F.log_softmax(out, dim=1)
+
+    def __str__(self):
+        pretty_net_str = ''
+        for layer_name in self._modules:
+            pretty_net_str += f'\n******** {layer_name} *********'
+            for items in getattr(self, layer_name):
+                pretty_net_str += f'\n{items}'
+            pretty_net_str += '\n'
+        return pretty_net_str
