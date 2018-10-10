@@ -1,4 +1,4 @@
-## TODO: define the convolutional neural network architecture
+## define the convolutional neural network architecture
 
 import torch
 from torch.autograd import Variable
@@ -27,9 +27,9 @@ from collections import OrderedDict
 # height_out = (height_in - kernel_size)/2 + 1
 # width_out = (width_in - kernel_size)/2 + 1
 
-class NamishNet(nn.Module):
+class NaimishNet(nn.Module):
     def __init__(self):
-        super(NamishNet, self).__init__()
+        super(NaimishNet, self).__init__()
 
         self.conv1 = nn.Sequential(
             OrderedDict([
