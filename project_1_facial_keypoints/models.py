@@ -90,9 +90,9 @@ class NamishNet(nn.Module):
     def __str__(self):
         pretty_net_str = ''
         for layer_name in self._modules:
-            pretty_net_str += f'{layer_name}:'
+            pretty_net_str += f'{layer_name}:\n'
             for items in getattr(self, layer_name):
-                pretty_net_str += f'\n{items}'
+                pretty_net_str += f'{items}\n'
             pretty_net_str += '\n'
         return pretty_net_str
 
@@ -140,8 +140,8 @@ class LeNet(nn.Module):
     def __str__(self):
         pretty_net_str = ''
         for layer_name in self._modules:
-            pretty_net_str += f'{layer_name}:'
+            pretty_net_str += f'{layer_name}:\n'
             for items in getattr(self, layer_name):
-                pretty_net_str += f'\n{items}'
+                pretty_net_str += f'{items}\n'
             pretty_net_str += '\n'
         return pretty_net_str
