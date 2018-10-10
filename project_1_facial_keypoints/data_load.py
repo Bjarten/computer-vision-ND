@@ -186,3 +186,18 @@ class RandomVertiacalFlip(object):
             key_pts_copy[:,0] = key_pts_copy[:, 0] + 224
             
         return {'image': image_copy, 'keypoints': key_pts_copy}
+    
+class Random180DegFlip(object):
+    """Random vertical flip of image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        image_copy = np.copy(image)
+        key_pts_copy = np.copy(key_pts)
+
+        if random.choice([0, 1]) < .25:
+            image_copy = np.flipud(image_copy)
+            key_pts_copy[:,1] = -key_pts_copy[:,1]
+            key_pts_copy[:,1] = key_pts_copy[:,1] + 224
+            
+        return {'image': image_copy, 'keypoints': key_pts_copy}
