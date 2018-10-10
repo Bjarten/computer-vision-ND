@@ -9,6 +9,24 @@ import torch.nn.init as I
 
 from collections import OrderedDict
 
+# *** Conv2d output dimensions ***
+# height_out = (height_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+# width_out = (width_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+# weights_out = height_out * width_out * channels_out
+#
+# With values: strid = 1, padding = 0, dilation = 1
+# height_out = height_in - kernel_size + 1
+# width_out = width_in - kernel_size + 1
+#
+# *** MaxPool2d output dimensions ***
+# height_out = (height_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+# width_out = (width_in + 2*padding - dilation*(kernel_size - 1) - 1)/stride + 1
+# weights_out = height_out * width_out * channels_out
+#
+# With values: strid = 2, padding = 0, dilation = 1
+# height_out = (height_in - kernel_size)/2 + 1
+# width_out = (width_in - kernel_size)/2 + 1
+
 class NamishNet(nn.Module):
     def __init__(self):
         super(NamishNet, self).__init__()
