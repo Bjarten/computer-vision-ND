@@ -171,3 +171,18 @@ class ToTensor(object):
         
         return {'image': torch.from_numpy(image),
                 'keypoints': torch.from_numpy(key_pts)}
+    
+class RandomVertiacalFlip(object):
+    """Random vertical flip of image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        image_copy = np.copy(image)
+        key_pts_copy = np.copy(key_pts)
+
+        if random.choice([0, 1]) < .5:
+            image_copy = np.fliplr(image_copy)
+            key_pts_copy[:,0] = -key_pts_copy[:, 0]
+            key_pts_copy[:,0] = key_pts_copy[:, 0] + 224
+            
+        return {'image': image_copy, 'keypoints': key_pts_copy}
