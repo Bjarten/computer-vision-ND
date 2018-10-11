@@ -35,7 +35,7 @@ class NaimishNet(nn.Module):
             OrderedDict([
             ('conv1', nn.Conv2d(1, 32, kernel_size=5)),
             ('relu1', nn.ReLU())
-            ])) # (32, 240, 240)
+            ])) # (32, 220, 220)
 
         self.maxp1 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2, 2)),
