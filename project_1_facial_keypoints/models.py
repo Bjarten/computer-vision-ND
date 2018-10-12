@@ -39,8 +39,8 @@ class NaimishNet(nn.Module):
 
         self.maxp1 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2, 2)),
-            #('dropout1', nn.Dropout(0.1)),
-            #('bachnorm1', nn.BatchNorm2d(32))
+            ('dropout1', nn.Dropout(0.2)),
+            ('bachnorm1', nn.BatchNorm2d(32))
             ])) # (32, 110, 110)
 
         self.conv2 = nn.Sequential(OrderedDict([
@@ -50,8 +50,8 @@ class NaimishNet(nn.Module):
 
         self.maxp2 = nn.Sequential(OrderedDict([
             ('maxp2', nn.MaxPool2d(2, 2)),
-            #('dropout2', nn.Dropout(0.2)),
-            #('bachnorm2', nn.BatchNorm2d(64))
+            ('dropout2', nn.Dropout(0.2)),
+            ('bachnorm2', nn.BatchNorm2d(64))
             ])) # (64, 54, 54)
 
         self.conv3 = nn.Sequential(OrderedDict([
@@ -61,8 +61,8 @@ class NaimishNet(nn.Module):
 
         self.maxp3 = nn.Sequential(OrderedDict([
             ('maxp3', nn.MaxPool2d(2, 2)),
-            #('dropout4', nn.Dropout(0.3)),
-            #('bachnorm3', nn.BatchNorm2d(128))
+            ('dropout4', nn.Dropout(0.2)),
+            ('bachnorm3', nn.BatchNorm2d(128))
             ])) # (128, 26, 26)
 
         self.conv4 = nn.Sequential(OrderedDict([
@@ -72,26 +72,26 @@ class NaimishNet(nn.Module):
 
         self.maxp4 = nn.Sequential(OrderedDict([
             ('maxp4', nn.MaxPool2d(2, 2)),
-            #('dropout4', nn.Dropout(0.4)),
-            #('bachnorm4', nn.BatchNorm2d(256))
+            ('dropout4', nn.Dropout(0.2)),
+            ('bachnorm4', nn.BatchNorm2d(256))
             ]))  # (256, 12, 12)
 
         self.fc1 = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(256 * 12 * 12, 1000)),
+            ('fc1', nn.Linear(256 * 12 * 12, 1024)),
             ('relu5', nn.ReLU()),
-            #('dropout5', nn.Dropout(0.5)),
-            #('bachnorm4', nn.BatchNorm1d(1000))
+            ('dropout5', nn.Dropout(0.2)),
+            ('bachnorm4', nn.BatchNorm1d(1024))
             ])) # (36864, 1000)
 
         self.fc2 = nn.Sequential(OrderedDict([
-            ('fc2', nn.Linear(1000, 1000)),
+            ('fc2', nn.Linear(1024, 1024)),
             ('relu6', nn.ReLU()),
-            #('dropout6', nn.Dropout(0.6)),
-            #('bachnorm4', nn.BatchNorm1d(1000))
+            ('dropout6', nn.Dropout(0.2)),
+            ('bachnorm4', nn.BatchNorm1d(1024))
             ])) # (1000, 1000)
 
         self.fc3 = nn.Sequential(OrderedDict([
-            ('fc3', nn.Linear(1000, 136))
+            ('fc3', nn.Linear(1024, 136))
             ])) # (1000, 136)
 
     def forward(self, x):
