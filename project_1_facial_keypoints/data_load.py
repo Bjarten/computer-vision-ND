@@ -176,6 +176,11 @@ class FaceCrop(object):
         new_h = int(y_max - y_min)
         new_w = int(x_max - x_min)
         
+        if new_h > new_w:
+            new_w = new_h
+        else:
+            new_h = new_w
+            
         image = image[y-10: y + new_h + 10, x - 10: x + new_w + 10]
         key_pts = key_pts - [x-10, y-10]
 
