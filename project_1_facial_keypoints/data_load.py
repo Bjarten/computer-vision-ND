@@ -8,7 +8,7 @@ import pandas as pd
 import cv2
 
 import random
-
+import matplotlib.pyplot as plt
 
 class FacialKeypointsDataset(Dataset):
     """Face Landmarks dataset."""
@@ -99,14 +99,13 @@ class Rescale(object):
                 new_h, new_w = self.output_size, self.output_size * w / h
         else:
             new_h, new_w = self.output_size
-
         new_h, new_w = int(new_h), int(new_w)
-
+            
         img = cv2.resize(image, (new_w, new_h))
-        
+                 
         # scale the pts, too
         key_pts = key_pts * [new_w / w, new_h / h]
-
+        
         return {'image': img, 'keypoints': key_pts}
 
 
@@ -151,40 +150,65 @@ class FaceCrop(object):
     """       
     
     def __call__(self, sample):
-        
         image, key_pts = sample['image'], sample['keypoints']
+
+        image_copy = np.copy(image)
+        
+        h, w = image.shape[:2]
         
         x_max = 0
-        x_min = 1000
+        x_min = 10000
         y_max = 0
-        y_min = 1000
+        y_min = 10000
         
         # Find the coordinates to keypoints at the far left, far right, top and bottom
+        # Also check that no keypoints are outside the image
         for coord in key_pts:
             if coord[0] > x_max:
-                x_max = coord[0]
+                if coord[0] >= w:
+                    x_max = w
+                else:
+                    x_max = coord[0]
             if coord[0] < x_min:
-                x_min = coord[0]
+                if coord[0] < 0:
+                    x_min = 0
+                else:
+                    x_min = coord[0]
             if coord[1] > y_max:
-                y_max = coord[1]
+                if coord[1] >= h:
+                    y_max = h
+                else:
+                    y_max = coord[1]
             if coord[1] < y_min:
-                y_min = coord[1]
-
+                if coord[1] < 0:
+                    y_min = 0
+                else:
+                    y_min = coord[1]
+        
+        # Set the the left corner keypoint as out crop cooridnate
         x = int(x_min)
         y = int(y_min)
-    
+        
+        # Get height and width of keypoint area
         new_h = int(y_max - y_min)
         new_w = int(x_max - x_min)
         
+        # Set the smallest side equal to the largest since we want a square
         if new_h > new_w:
             new_w = new_h
         else:
-            new_h = new_w
+            new_h = new_w       
+         
+         # Check that padding dosent go outside the frame
+        padding = 0
+        if(y - 10 > 0 and x - 10 > 0 and x + new_w + 10 < w and y + new_h + 10 < h):
+            padding = 10
             
-        image = image[y-10: y + new_h + 10, x - 10: x + new_w + 10]
-        key_pts = key_pts - [x-10, y-10]
-
-        return {'image': image, 'keypoints': key_pts}
+        image_copy = image_copy[y - padding: y + new_h + padding, x - padding: x + new_w + padding]     
+        
+        key_pts = key_pts - [x - padding, y - padding] 
+        
+        return {'image': image_copy, 'keypoints': key_pts}
     
 class RandomVerticalFlip(object):
     """Random vertical flip of image in sample"""
@@ -212,7 +236,6 @@ class ToTensor(object):
         # numpy image: H x W x C
         # torch image: C X H X W
         image = image.transpose((2, 0, 1))
-        
         return {'image': torch.from_numpy(image),
                 'keypoints': torch.from_numpy(key_pts)}
     
