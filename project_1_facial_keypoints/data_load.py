@@ -142,6 +142,45 @@ class RandomCrop(object):
 
         return {'image': image, 'keypoints': key_pts}
     
+class FaceCrop(object):
+    """ Crop out face using the keypoints as reference
+
+    Args:
+        output_size (tuple or int): Desired output size. If int, square crop
+            is made.
+    """       
+    
+    def __call__(self, sample):
+        
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        x_max = 0
+        x_min = 1000
+        y_max = 0
+        y_min = 1000
+        
+        # Find the coordinates to keypoints at the far left, far right, top and bottom
+        for coord in key_pts:
+            if coord[0] > x_max:
+                x_max = coord[0]
+            if coord[0] < x_min:
+                x_min = coord[0]
+            if coord[1] > y_max:
+                y_max = coord[1]
+            if coord[1] < y_min:
+                y_min = coord[1]
+
+        x = int(x_min)
+        y = int(y_min)
+    
+        new_h = int(y_max - y_min)
+        new_w = int(x_max - x_min)
+        
+        image = image[y-10: y + new_h + 10, x - 10: x + new_w + 10]
+        key_pts = key_pts - [x-10, y-10]
+
+        return {'image': image, 'keypoints': key_pts}
+    
 class RandomVerticalFlip(object):
     """Random vertical flip of image in sample"""
     def __call__(self, sample):
