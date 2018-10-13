@@ -193,7 +193,7 @@ class FaceCrop(object):
         new_h = int(y_max - y_min)
         new_w = int(x_max - x_min)
         
-        # Set the smallest side equal to the largest since we want a square
+        #Set the smallest side equal to the largest since we want a square
         if new_h > new_w:
             new_w = new_h
         else:
@@ -203,16 +203,16 @@ class FaceCrop(object):
         padding_x = 0
         padding_y = 0
         
-        padding_size_x = random.randint(5,10)
-        padding_size_y = random.randint(5,10)
+        padding_size_x = random.randint(30,70)
+        padding_size_y = random.randint(30,70)
         
         if(y - padding_size_y > 0 and x - padding_size_x > 0
            and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
             padding_x = padding_size_x
             padding_y = padding_size_y
         else:
-            padding_size_x = random.randint(0,4)
-            padding_size_y = random.randint(0,4)
+            padding_size_x = random.randint(0,29)
+            padding_size_y = random.randint(0,29)
             
             if(y - padding_size_y > 0 and x - padding_size_x > 0
                and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
@@ -225,17 +225,6 @@ class FaceCrop(object):
         key_pts = key_pts - [x - padding_x, y - padding_y] 
         
         return {'image': image_copy, 'keypoints': key_pts}
-    
-class RandomVerticalFlip(object):
-    """Random vertical flip of image in sample"""
-    def __call__(self, sample):
-        image, key_pts = sample['image'], sample['keypoints']
-
-        if random.choice([0, 1]) < .5:
-            image = np.fliplr(image)
-            key_pts = np.fliplr(key_pts)
-
-        return {'image': image, 'keypoints': key_pts}
 
 class ToTensor(object):
     """Convert ndarrays in sample to Tensors."""
@@ -279,7 +268,7 @@ class RandomGamma(object):
         image_copy = np.copy(image)
         key_pts_copy = np.copy(key_pts)
 
-        image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.5, 1.1)) 
+        image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.3, 1.1)) 
         
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
@@ -303,7 +292,7 @@ class RandomVertiacalFlip(object):
         if random.choice([0, 1]) < .5:
             image_copy = np.fliplr(image_copy)
             key_pts_copy[:,0] = -key_pts_copy[:, 0]
-            key_pts_copy[:,0] = key_pts_copy[:, 0] + 224
+            key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[0]
             
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
