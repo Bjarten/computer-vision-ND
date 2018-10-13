@@ -200,13 +200,29 @@ class FaceCrop(object):
             new_h = new_w       
          
          # Check that padding dosent go outside the frame
-        padding = 0
-        if(y - 10 > 0 and x - 10 > 0 and x + new_w + 10 < w and y + new_h + 10 < h):
-            padding = 10
-            
-        image_copy = image_copy[y - padding: y + new_h + padding, x - padding: x + new_w + padding]     
+        padding_x = 0
+        padding_y = 0
         
-        key_pts = key_pts - [x - padding, y - padding] 
+        padding_size_x = random.randint(5,10)
+        padding_size_y = random.randint(5,10)
+        
+        if(y - padding_size_y > 0 and x - padding_size_x > 0
+           and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
+            padding_x = padding_size_x
+            padding_y = padding_size_y
+        else:
+            padding_size_x = random.randint(0,4)
+            padding_size_y = random.randint(0,4)
+            
+            if(y - padding_size_y > 0 and x - padding_size_x > 0
+               and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
+                padding_x = padding_size_x
+                padding_y = padding_size_y  
+        
+        
+        image_copy = image_copy[y - padding_y: y + new_h + padding_y, x - padding_x: x + new_w + padding_x]     
+        
+        key_pts = key_pts - [x - padding_x, y - padding_y] 
         
         return {'image': image_copy, 'keypoints': key_pts}
     
@@ -254,6 +270,7 @@ class Random90DegFlip(object):
             
 
         return {'image': image_copy, 'keypoints': key_pts_copy}
+    
     
 class RandomVertiacalFlip(object):
     """Random vertical flip of image in sample"""
