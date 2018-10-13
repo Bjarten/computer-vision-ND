@@ -307,6 +307,6 @@ class Random180DegFlip(object):
         if random.choice([0, 1]) < .25:
             image_copy = np.flipud(image_copy)
             key_pts_copy[:,1] = -key_pts_copy[:,1]
-            key_pts_copy[:,1] = key_pts_copy[:,1] + 224
+            key_pts_copy[:,1] = key_pts_copy[:,1] + image_copy.shape[0]
             
         return {'image': image_copy, 'keypoints': key_pts_copy}
