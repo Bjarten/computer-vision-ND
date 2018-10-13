@@ -289,10 +289,10 @@ class RandomVertiacalFlip(object):
         image_copy = np.copy(image)
         key_pts_copy = np.copy(key_pts)
 
-        if random.choice([0, 1]) < .5:
+        if random.choice([0, 1]) < .25:
             image_copy = np.fliplr(image_copy)
             key_pts_copy[:,0] = -key_pts_copy[:, 0]
-            key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[0]
+            key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[1]
             
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
