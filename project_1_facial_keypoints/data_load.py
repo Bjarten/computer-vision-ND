@@ -271,6 +271,26 @@ class Random90DegFlip(object):
 
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
+class RandomGamma(object):
+    """Random vertical flip of image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        image_copy = np.copy(image)
+        key_pts_copy = np.copy(key_pts)
+
+        image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.5, 1.1)) 
+        
+        return {'image': image_copy, 'keypoints': key_pts_copy}
+    
+def adjust_gamma(image, gamma=1.0):# build a lookup table mapping the pixel values [0, 255] to 
+    # their adjusted gamma values
+    invGamma = 1.0 / gamma
+    table = np.array([((i / 255.0) ** invGamma) * 255
+    for i in np.arange(0, 256)]).astype("uint8")
+ 
+    # apply gamma correction using the lookup table
+    return cv2.LUT(image, table)
     
 class RandomVertiacalFlip(object):
     """Random vertical flip of image in sample"""
