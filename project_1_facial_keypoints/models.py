@@ -34,60 +34,60 @@ class NaimishNet(nn.Module):
         self.conv1 = nn.Sequential(
             OrderedDict([
             ('conv1', nn.Conv2d(1, 32, kernel_size=5)),
-            ('relu1', nn.ReLU())
+            ('relu1', nn.ELU())
             ])) # (32, 124, 124)
 
         self.maxp1 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2, 2)),
-            ('dropout1', nn.Dropout(0.2)),
+            ('dropout1', nn.Dropout(0.1)),
             ('bachnorm1', nn.BatchNorm2d(32))
             ])) # (32, 62, 62)
 
         self.conv2 = nn.Sequential(OrderedDict([
-            ('conv2', nn.Conv2d(32, 64, kernel_size=3)),
-            ('relu2', nn.ReLU())
-            ])) # (64, 60, 60)
+            ('conv2', nn.Conv2d(32, 64, kernel_size=5)),
+            ('relu2', nn.ELU())
+            ])) # (64, 58, 58)
 
         self.maxp2 = nn.Sequential(OrderedDict([
             ('maxp2', nn.MaxPool2d(2, 2)),
-            ('dropout2', nn.Dropout(0.2)),
+            ('dropout2', nn.Dropout(0.1)),
             ('bachnorm2', nn.BatchNorm2d(64))
-            ])) # (64, 30, 30)
+            ])) # (64, 29, 29)
 
         self.conv3 = nn.Sequential(OrderedDict([
-            ('conv3', nn.Conv2d(64, 128, kernel_size=3)),
-            ('relu3', nn.ReLU())
-            ])) # (128, 28, 28)
+            ('conv3', nn.Conv2d(64, 128, kernel_size=5)),
+            ('relu3', nn.ELU())
+            ])) # (128, 25, 25)
 
         self.maxp3 = nn.Sequential(OrderedDict([
             ('maxp3', nn.MaxPool2d(2, 2)),
             ('dropout4', nn.Dropout(0.2)),
             ('bachnorm3', nn.BatchNorm2d(128))
-            ])) # (128, 14, 14)
+            ])) # (128, 12, 12)
 
         self.conv4 = nn.Sequential(OrderedDict([
-            ('conv4', nn.Conv2d(128, 256, kernel_size=2)),
-            ('relu4', nn.ReLU())
-            ])) # (256, 13, 13)
+            ('conv4', nn.Conv2d(128, 256, kernel_size=5)),
+            ('relu4', nn.ELU())
+            ])) # (256, 8, 8)
 
         self.maxp4 = nn.Sequential(OrderedDict([
             ('maxp4', nn.MaxPool2d(2, 2)),
             ('dropout4', nn.Dropout(0.2)),
             ('bachnorm4', nn.BatchNorm2d(256))
-            ]))  # (256, 6, 6)
+            ]))  # (256, 4, 4)
 
         self.fc1 = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(256 * 6 * 6, 1024)),
+            ('fc1', nn.Linear(256 * 4 * 4, 1024)),
             ('relu5', nn.ReLU()),
-            ('dropout5', nn.Dropout(0.2)),
-            ('bachnorm4', nn.BatchNorm1d(1024))
+            ('dropout5', nn.Dropout(0.3)),
+            #('bachnorm4', nn.BatchNorm1d(1024))
             ])) # (36864, 1000)
 
         self.fc2 = nn.Sequential(OrderedDict([
             ('fc2', nn.Linear(1024, 1024)),
-            ('relu6', nn.ReLU()),
-            ('dropout6', nn.Dropout(0.2)),
-            ('bachnorm4', nn.BatchNorm1d(1024))
+            ('relu6', nn.ELU()),
+            ('dropout6', nn.Dropout(0.4)),
+            #('bachnorm4', nn.BatchNorm1d(1024))
             ])) # (1000, 1000)
 
         self.fc3 = nn.Sequential(OrderedDict([
