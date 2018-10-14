@@ -200,29 +200,39 @@ class FaceCrop(object):
             new_h = new_w       
          
          # Check that padding dosent go outside the frame
-        padding_x = 0
-        padding_y = 0
+        padding_x_1 = 0
+        padding_x_2 = 0
+        padding_y_1 = 0
+        padding_y_2 = 0
         
-        padding_size_x = random.randint(30,70)
-        padding_size_y = random.randint(30,70)
+        padding_size_x_1 = random.randint(1,50)
+        padding_size_x_2 = random.randint(1,50)
+        padding_size_y_1 = random.randint(1,50)
+        padding_size_y_2 = random.randint(1,50)
         
-        if(y - padding_size_y > 0 and x - padding_size_x > 0
-           and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
-            padding_x = padding_size_x
-            padding_y = padding_size_y
+        if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
+           and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
+            padding_x_1 = padding_size_x_1
+            padding_x_2 = padding_size_x_2
+            padding_y_1 = padding_size_y_1
+            padding_y_2 = padding_size_y_2
         else:
-            padding_size_x = random.randint(0,29)
-            padding_size_y = random.randint(0,29)
+            padding_size_x_1 = random.randint(1,20)
+            padding_size_x_2 = random.randint(1,20)
+            padding_size_2_1 = random.randint(1,20)
+            padding_size_y_2 = random.randint(1,20)
             
-            if(y - padding_size_y > 0 and x - padding_size_x > 0
-               and x + new_w + padding_size_x < w and y + new_h + padding_size_y < h):
-                padding_x = padding_size_x
-                padding_y = padding_size_y  
+            if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
+               and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
+                padding_x_1 = padding_size_x_1
+                padding_x_2 = padding_size_x_2
+                padding_y_1 = padding_size_y_1
+                padding_y_2 = padding_size_y_2  
         
         
-        image_copy = image_copy[y - padding_y: y + new_h + padding_y, x - padding_x: x + new_w + padding_x]     
+        image_copy = image_copy[y - padding_y_1: y + new_h + padding_y_2, x - padding_x_1: x + new_w + padding_x_2]     
         
-        key_pts = key_pts - [x - padding_x, y - padding_y] 
+        key_pts = key_pts - [x - padding_x_1, y - padding_y_1] 
         
         return {'image': image_copy, 'keypoints': key_pts}
 
@@ -268,7 +278,7 @@ class RandomGamma(object):
         image_copy = np.copy(image)
         key_pts_copy = np.copy(key_pts)
 
-        image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.3, 1.1)) 
+        image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.8, 1.1)) 
         
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
@@ -292,6 +302,7 @@ class RandomVertiacalFlip(object):
         if random.choice([0, 1]) < .25:
             image_copy = np.fliplr(image_copy)
             key_pts_copy[:,0] = -key_pts_copy[:, 0]
+            key_pts_copy = key_pts_copy[::-1]
             key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[1]
             
         return {'image': image_copy, 'keypoints': key_pts_copy}
