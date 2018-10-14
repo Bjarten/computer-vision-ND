@@ -291,33 +291,3 @@ def adjust_gamma(image, gamma=1.0):# build a lookup table mapping the pixel valu
     # apply gamma correction using the lookup table
     return cv2.LUT(image, table)
     
-class RandomVertiacalFlip(object):
-    """Random vertical flip of image in sample"""
-    def __call__(self, sample):
-        image, key_pts = sample['image'], sample['keypoints']
-        
-        image_copy = np.copy(image)
-        key_pts_copy = np.copy(key_pts)
-
-        if random.choice([0, 1]) < .25:
-            image_copy = np.fliplr(image_copy)
-            key_pts_copy[:,0] = -key_pts_copy[:, 0]
-            key_pts_copy = key_pts_copy[::-1]
-            key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[1]
-            
-        return {'image': image_copy, 'keypoints': key_pts_copy}
-    
-class Random180DegFlip(object):
-    """Random vertical flip of image in sample"""
-    def __call__(self, sample):
-        image, key_pts = sample['image'], sample['keypoints']
-        
-        image_copy = np.copy(image)
-        key_pts_copy = np.copy(key_pts)
-
-        if random.choice([0, 1]) < .25:
-            image_copy = np.flipud(image_copy)
-            key_pts_copy[:,1] = -key_pts_copy[:,1]
-            key_pts_copy[:,1] = key_pts_copy[:,1] + image_copy.shape[0]
-            
-        return {'image': image_copy, 'keypoints': key_pts_copy}
