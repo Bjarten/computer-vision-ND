@@ -28,66 +28,73 @@ from collections import OrderedDict
 # width_out = (width_in - kernel_size)/2 + 1
 
 class NaimishNet(nn.Module):
-    def __init__(self):
-        super(NaimishNet, self).__init__()
+    def __init__(self, image_size, kernels = [5, 5, 3, 3],out_channels = [32, 64, 128, 256],
+                dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4]):
+        super(NaimishNet, self).__init__()        
+        
+        # Find the size of the last maxp output. 
+        last_maxp_size = image_size
+        for idx, val in enumerate(kernels):
+            last_maxp_size = (last_maxp_size - (val-1))//2
+        last_maxp_size = out_channels[-1] * last_maxp_size * last_maxp_size
 
         self.conv1 = nn.Sequential(
             OrderedDict([
-            ('conv1', nn.Conv2d(1, 32, kernel_size=5)),
+            ('conv1', nn.Conv2d(1, out_channels[0], kernel_size=kernels[0])),
             ('relu1', nn.ELU())
-            ])) # (32, 124, 124)
+            ])) # (32, 252, 252)                        
 
         self.maxp1 = nn.Sequential(OrderedDict([
             ('maxp1', nn.MaxPool2d(2, 2)),
-            ('dropout1', nn.Dropout(0.1)),
-            ('bachnorm1', nn.BatchNorm2d(32))
-            ])) # (32, 62, 62)
+            ('dropout1', nn.Dropout(dropout_p[0])),
+            ('bachnorm1', nn.BatchNorm2d(out_channels[0]))
+            ])) # (32, 126, 126)
 
         self.conv2 = nn.Sequential(OrderedDict([
-            ('conv2', nn.Conv2d(32, 64, kernel_size=5)),
+            ('conv2', nn.Conv2d(out_channels[0], out_channels[1], kernel_size=kernels[1])),
             ('relu2', nn.ELU())
-            ])) # (64, 58, 58)
+            ])) # (64, 122, 122)
 
         self.maxp2 = nn.Sequential(OrderedDict([
             ('maxp2', nn.MaxPool2d(2, 2)),
-            ('dropout2', nn.Dropout(0.1)),
-            ('bachnorm2', nn.BatchNorm2d(64))
-            ])) # (64, 29, 29)
+            ('dropout2', nn.Dropout(dropout_p[1])),
+            ('bachnorm2', nn.BatchNorm2d(out_channels[1]))
+            ])) # (64, 61, 61)
 
         self.conv3 = nn.Sequential(OrderedDict([
-            ('conv3', nn.Conv2d(64, 128, kernel_size=5)),
+            ('conv3', nn.Conv2d(out_channels[1], out_channels[2], kernel_size=kernels[2])),
             ('relu3', nn.ELU())
-            ])) # (128, 25, 25)
+            ])) # (128, 59, 59)
 
         self.maxp3 = nn.Sequential(OrderedDict([
             ('maxp3', nn.MaxPool2d(2, 2)),
-            ('dropout4', nn.Dropout(0.2)),
-            ('bachnorm3', nn.BatchNorm2d(128))
-            ])) # (128, 12, 12)
+            ('dropout3', nn.Dropout(dropout_p[2])),
+            ('bachnorm3', nn.BatchNorm2d(out_channels[2]))
+            ])) # (128, 29, 29)
 
         self.conv4 = nn.Sequential(OrderedDict([
-            ('conv4', nn.Conv2d(128, 256, kernel_size=5)),
+            ('conv4', nn.Conv2d(out_channels[2], out_channels[3], kernel_size=kernels[3])),
             ('relu4', nn.ELU())
-            ])) # (256, 8, 8)
+            ])) # (256, 27, 27)
 
         self.maxp4 = nn.Sequential(OrderedDict([
             ('maxp4', nn.MaxPool2d(2, 2)),
-            ('dropout4', nn.Dropout(0.2)),
-            ('bachnorm4', nn.BatchNorm2d(256))
-            ]))  # (256, 4, 4)
+            ('dropout4', nn.Dropout(dropout_p[3])),
+            ('bachnorm4', nn.BatchNorm2d(out_channels[3]))
+            ]))  # (256, 13, 13)
 
         self.fc1 = nn.Sequential(OrderedDict([
-            ('fc1', nn.Linear(256 * 4 * 4, 1024)),
+            ('fc1', nn.Linear(last_maxp_size, 1024)),
             ('relu5', nn.ReLU()),
-            ('dropout5', nn.Dropout(0.3)),
-            #('bachnorm4', nn.BatchNorm1d(1024))
+            ('dropout5', nn.Dropout(dropout_p[4])),
+            ('bachnorm5', nn.BatchNorm1d(1024))
             ])) # (36864, 1000)
 
         self.fc2 = nn.Sequential(OrderedDict([
             ('fc2', nn.Linear(1024, 1024)),
             ('relu6', nn.ELU()),
-            ('dropout6', nn.Dropout(0.4)),
-            #('bachnorm4', nn.BatchNorm1d(1024))
+            ('dropout6', nn.Dropout(dropout_p[5])),
+            ('bachnorm6', nn.BatchNorm1d(1024))
             ])) # (1000, 1000)
 
         self.fc3 = nn.Sequential(OrderedDict([
@@ -108,7 +115,7 @@ class NaimishNet(nn.Module):
         out = self.fc2(out)
         out = self.fc3(out)
         return out
-
+    
     def __str__(self):
         pretty_net_str = ''
         for layer_name in self._modules:
@@ -120,7 +127,7 @@ class NaimishNet(nn.Module):
 
 class LeNet(nn.Module):
     def __init__(self):
-        super(LeNet_1, self).__init__()
+        super(LeNet, self).__init__()
 
         self.conv1 = nn.Sequential(
             OrderedDict([
