@@ -6,7 +6,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 # can use the below import should you choose to initialize the weights of your Net
 import torch.nn.init as I
-import math
 
 from collections import OrderedDict
 
@@ -36,7 +35,7 @@ class NaimishNet(nn.Module):
         # Find the size of the last maxp output. 
         last_maxp_size = image_size
         for idx, val in enumerate(kernels):
-            last_maxp_size = math.floor((last_maxp_size - (val-1))/2)
+            last_maxp_size = (last_maxp_size - (val-1))//2
         last_maxp_size = out_channels[3] * last_maxp_size * last_maxp_size
 
         self.conv1 = nn.Sequential(
