@@ -205,10 +205,10 @@ class FaceCrop(object):
         padding_y_1 = 0
         padding_y_2 = 0
         
-        padding_size_x_1 = random.randint(5,20)
-        padding_size_x_2 = random.randint(5,20)
-        padding_size_y_1 = random.randint(5,20)
-        padding_size_y_2 = random.randint(5,20)
+        padding_size_x_1 = random.randint(30,70)
+        padding_size_x_2 = random.randint(30,70)
+        padding_size_y_1 = random.randint(30,70)
+        padding_size_y_2 = random.randint(30,70)
         
         if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
            and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
@@ -217,17 +217,30 @@ class FaceCrop(object):
             padding_y_1 = padding_size_y_1
             padding_y_2 = padding_size_y_2
         else:
-            padding_size_x_1 = random.randint(1,4)
-            padding_size_x_2 = random.randint(1,4)
-            padding_size_2_1 = random.randint(1,4)
-            padding_size_y_2 = random.randint(1,4)
-            
+            padding_size_x_1 = random.randint(10,29)
+            padding_size_x_2 = random.randint(10,29)
+            padding_size_2_1 = random.randint(10,29)
+            padding_size_y_2 = random.randint(10,29)
+         
             if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
                and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
                 padding_x_1 = padding_size_x_1
                 padding_x_2 = padding_size_x_2
                 padding_y_1 = padding_size_y_1
-                padding_y_2 = padding_size_y_2  
+                padding_y_2 = padding_size_y_2
+                
+            else:
+                padding_size_x_1 = random.randint(1,9)
+                padding_size_x_2 = random.randint(1,9)
+                padding_size_2_1 = random.randint(1,9)
+                padding_size_y_2 = random.randint(1,9)
+         
+                if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
+                   and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
+                    padding_x_1 = padding_size_x_1
+                    padding_x_2 = padding_size_x_2
+                    padding_y_1 = padding_size_y_1
+                    padding_y_2 = padding_size_y_2 
         
         
         image_copy = image_copy[y - padding_y_1: y + new_h + padding_y_2, x - padding_x_1: x + new_w + padding_x_2]     
