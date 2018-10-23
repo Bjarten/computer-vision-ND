@@ -20,7 +20,7 @@ def get_loader(transform,
                unk_word="<unk>",
                vocab_from_file=True,
                num_workers=0,
-               cocoapi_loc='/opt'):
+               cocoapi_loc='/Users/bjartesunde/Dropbox/Udacity/Computer Vision Nanodegree/computer-vision-ND/project_2_image_captioning_project/cocoapi'):
     """Returns the data loader.
     Args:
       transform: Image transform.
@@ -43,8 +43,8 @@ def get_loader(transform,
     # Based on mode (train, val, test), obtain img_folder and annotations_file.
     if mode == 'train':
         if vocab_from_file==True: assert os.path.exists(vocab_file), "vocab_file does not exist.  Change vocab_from_file to False to create vocab_file."
-        img_folder = os.path.join(cocoapi_loc, 'cocoapi/images/train2014/')
-        annotations_file = os.path.join(cocoapi_loc, 'cocoapi/annotations/captions_train2014.json')
+        img_folder = os.path.join(cocoapi_loc, '/Users/bjartesunde/Dropbox/Udacity/Computer Vision Nanodegree/computer-vision-ND/project_2_image_captioning_project/cocoapi/images/train2014/')
+        annotations_file = os.path.join(cocoapi_loc, '/Users/bjartesunde/Dropbox/Udacity/Computer Vision Nanodegree/computer-vision-ND/project_2_image_captioning_project/cocoapi/annotations/captions_train2014.json')
     if mode == 'test':
         assert batch_size==1, "Please change batch_size to 1 if testing your model."
         assert os.path.exists(vocab_file), "Must first generate vocab.pkl from training data."
