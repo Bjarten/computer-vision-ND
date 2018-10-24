@@ -8,7 +8,7 @@ In this project, I build a facial keypoint detection system. The system consists
 The Udacity repository for this project: [P1_Facial_Keypoints](https://github.com/udacity/P1_Facial_Keypoints)
 
 ## Project 2: Image Captioning
-In this project, I design a CNN-RNN (Convolutional Neural Network - Recurrent Neural Network) model for  automatically generating image captions.
+In this project, I design a CNN-RNN (Convolutional Neural Network - Recurrent Neural Network) model for  automatically generating image captions. The image captioning model is displayed below. 
 
 ![Image Captioning Model](images/cnn_rnn_model.png?raw=true) [Image source](https://arxiv.org/pdf/1411.4555.pdf)
 
