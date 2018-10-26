@@ -28,19 +28,31 @@ from collections import OrderedDict
 # width_out = (width_in - kernel_size)/2 + 1
 
 class NaimishNet(nn.Module):
-    def __init__(self, image_size, kernels = [5, 5, 3, 3],out_channels = [32, 64, 128, 256],
-                dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4]):
-        super(NaimishNet, self).__init__()        
+    def __init__(self, image_size, kernels = [5,5,3,3],out_channels = [32,64,128,256],
+                dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4], use_padding=True):
+        super(NaimishNet, self).__init__() 
+        # padding only support odd numbered kernels in this implementation
+        self.use_padding = use_padding
         
+        # init padding
+        if self.use_padding:
+            self.padding = [int((k-1)/2) for k in kernels]
+            print(self.padding)
+        else:
+            self.padding = [0,0,0,0]
+            
         # Find the size of the last maxp output. 
         last_maxp_size = image_size
         for idx, val in enumerate(kernels):
-            last_maxp_size = (last_maxp_size - (val-1))//2
+            if self.use_padding:
+                last_maxp_size = last_maxp_size//2
+            else:
+                last_maxp_size = (last_maxp_size - (val-1))//2
         last_maxp_size = out_channels[3] * last_maxp_size * last_maxp_size
 
         self.conv1 = nn.Sequential(
             OrderedDict([
-            ('conv1', nn.Conv2d(1, out_channels[0], kernel_size=kernels[0])),
+            ('conv1', nn.Conv2d(1, out_channels[0], kernel_size=kernels[0], padding=self.padding[0])),
             ('relu1', nn.ReLU())
             ])) # (32, 252, 252)                        
 
@@ -51,7 +63,7 @@ class NaimishNet(nn.Module):
             ])) # (32, 126, 126)
 
         self.conv2 = nn.Sequential(OrderedDict([
-            ('conv2', nn.Conv2d(out_channels[0], out_channels[1], kernel_size=kernels[1])),
+            ('conv2', nn.Conv2d(out_channels[0], out_channels[1], kernel_size=kernels[1], padding=self.padding[1])),
             ('relu2', nn.ReLU())
             ])) # (64, 122, 122)
 
@@ -62,7 +74,7 @@ class NaimishNet(nn.Module):
             ])) # (64, 61, 61)
 
         self.conv3 = nn.Sequential(OrderedDict([
-            ('conv3', nn.Conv2d(out_channels[1], out_channels[2], kernel_size=kernels[2])),
+            ('conv3', nn.Conv2d(out_channels[1], out_channels[2], kernel_size=kernels[2], padding=self.padding[2])),
             ('relu3', nn.ReLU())
             ])) # (128, 59, 59)
 
@@ -73,7 +85,7 @@ class NaimishNet(nn.Module):
             ])) # (128, 29, 29)
 
         self.conv4 = nn.Sequential(OrderedDict([
-            ('conv4', nn.Conv2d(out_channels[2], out_channels[3], kernel_size=kernels[3])),
+            ('conv4', nn.Conv2d(out_channels[2], out_channels[3], kernel_size=kernels[3], padding=self.padding[3])),
             ('relu4', nn.ReLU())
             ])) # (256, 27, 27)
 
