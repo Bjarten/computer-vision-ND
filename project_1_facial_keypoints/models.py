@@ -41,7 +41,7 @@ class NaimishNet(nn.Module):
         self.conv1 = nn.Sequential(
             OrderedDict([
             ('conv1', nn.Conv2d(1, out_channels[0], kernel_size=kernels[0])),
-            ('relu1', nn.ELU())
+            ('relu1', nn.ReLU())
             ])) # (32, 252, 252)                        
 
         self.maxp1 = nn.Sequential(OrderedDict([
@@ -52,7 +52,7 @@ class NaimishNet(nn.Module):
 
         self.conv2 = nn.Sequential(OrderedDict([
             ('conv2', nn.Conv2d(out_channels[0], out_channels[1], kernel_size=kernels[1])),
-            ('relu2', nn.ELU())
+            ('relu2', nn.ReLU())
             ])) # (64, 122, 122)
 
         self.maxp2 = nn.Sequential(OrderedDict([
@@ -63,7 +63,7 @@ class NaimishNet(nn.Module):
 
         self.conv3 = nn.Sequential(OrderedDict([
             ('conv3', nn.Conv2d(out_channels[1], out_channels[2], kernel_size=kernels[2])),
-            ('relu3', nn.ELU())
+            ('relu3', nn.ReLU())
             ])) # (128, 59, 59)
 
         self.maxp3 = nn.Sequential(OrderedDict([
@@ -74,7 +74,7 @@ class NaimishNet(nn.Module):
 
         self.conv4 = nn.Sequential(OrderedDict([
             ('conv4', nn.Conv2d(out_channels[2], out_channels[3], kernel_size=kernels[3])),
-            ('relu4', nn.ELU())
+            ('relu4', nn.ReLU())
             ])) # (256, 27, 27)
 
         self.maxp4 = nn.Sequential(OrderedDict([
@@ -88,18 +88,18 @@ class NaimishNet(nn.Module):
             ('relu5', nn.ReLU()),
             ('dropout5', nn.Dropout(dropout_p[4])),
             ('bachnorm5', nn.BatchNorm1d(1024))
-            ])) # (36864, 1000)
+            ])) # (36864, 1024)
 
         self.fc2 = nn.Sequential(OrderedDict([
             ('fc2', nn.Linear(1024, 1024)),
-            ('relu6', nn.ELU()),
+            ('relu6', nn.ReLU()),
             ('dropout6', nn.Dropout(dropout_p[5])),
             ('bachnorm6', nn.BatchNorm1d(1024))
-            ])) # (1000, 1000)
+            ])) # (1024, 1024)
 
         self.fc3 = nn.Sequential(OrderedDict([
             ('fc3', nn.Linear(1024, 136))
-            ])) # (1000, 136)
+            ])) # (1024, 136)
 
     def forward(self, x):
         out = self.conv1(x)
