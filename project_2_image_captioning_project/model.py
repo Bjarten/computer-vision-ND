@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torchvision.models as models
-
-
+import torch.nn.functional as F
+train_on_gpu = True
 class EncoderCNN(nn.Module):
     def __init__(self, embed_size):
         super(EncoderCNN, self).__init__()
@@ -22,12 +22,79 @@ class EncoderCNN(nn.Module):
     
 
 class DecoderRNN(nn.Module):
-    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=1):
-        pass
+    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=2, drop_prob=0.5):
+        super(DecoderRNN, self).__init__()
+        
+        self.embed_size = embed_size
+        self.hidden_size = hidden_size
+        self.vocab_size = vocab_size
+        self.num_layers = num_layers
+        self.drop_prob = drop_prob
+        
+        self.caption_embeddings = nn.Embedding(vocab_size, embed_size)
+        
+        # define the LSTM
+        self.lstm = nn.LSTM(embed_size, hidden_size, num_layers, 
+                            dropout=drop_prob, batch_first=True)
+        
+        # define a dropout layer
+        self.dropout = nn.Dropout(drop_prob)
+                            
+        # define the final, fully-connected output layer
+        self.fc = nn.Linear(hidden_size, vocab_size)
+        
+                            
+        # initialize the weights
+        #self.init_weights()
+        
     
     def forward(self, features, captions):
-        pass
-
+ 
+        self.hidden = self.init_hidden(features.shape[0])
+        self.init_weights()
+        
+        # remove end token from cations
+        captions = captions[:,:-1]
+        
+        caption_embeds = self.caption_embeddings(captions)
+        
+        inputs = torch.cat((features.unsqueeze(1),caption_embeds),1)
+        
+        out, self.hidden = self.lstm(inputs, self.hidden)
+        
+        # pass out through a droupout layer
+        out = self.dropout(out)
+                                
+        # put out through the fully-connected layer and sofmax
+        out = self.fc(out)
+        out = F.log_softmax(out, dim=1).data  
+             
+        return out
+        
+    def init_weights(self):
+        ''' Initialize weights for fully connected layer '''
+        initrange = 0.1
+        
+        # Set bias tensor to all zeros
+        self.fc.bias.data.fill_(0)
+        # FC weights as random uniform
+        self.fc.weight.data.uniform_(-1, 1)
+    
+    def init_hidden(self, batch_size):
+        ''' Initializes hidden state '''
+        # Create two new tensors with sizes n_layers x batch_size x n_hidden,
+        # initialized to zero, for hidden state and cell state of LSTM
+        weight = next(self.parameters()).data
+        
+        if (train_on_gpu):
+            hidden = (weight.new(self.num_layers, batch_size, self.hidden_size).zero_().cuda(),
+                  weight.new(self.num_layers, batch_size, self.hidden_size).zero_().cuda())
+        else:
+            hidden = (weight.new(self.num_layers, batch_size, self.hidden_size).zero_(),
+                      weight.new(self.num_layers, batch_size, self.hidden_size).zero_())
+        
+        return hidden
+    
     def sample(self, inputs, states=None, max_len=20):
         " accepts pre-processed image tensor (inputs) and returns predicted sentence (list of tensor ids of length max_len) "
         pass
