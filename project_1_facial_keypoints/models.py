@@ -37,7 +37,6 @@ class NaimishNet(nn.Module):
         # init padding
         if self.use_padding:
             self.padding = [int((k-1)/2) for k in kernels]
-            print(self.padding)
         else:
             self.padding = [0,0,0,0]
             
