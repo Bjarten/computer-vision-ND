@@ -45,7 +45,7 @@ class DecoderRNN(nn.Module):
         
                             
         # initialize the weights
-        #self.init_weights()
+        self.init_weights()
         
     
     def forward(self, features, captions):
@@ -95,22 +95,7 @@ class DecoderRNN(nn.Module):
         # the simple improvement over the LSTM that we set out to discover."
         # http://proceedings.mlr.press/v37/jozefowicz15.pdf
         # https://discuss.pytorch.org/t/set-forget-gate-bias-of-lstm/1745/4
-    
-    def init_hidden(self, batch_size):
-        ''' Initializes hidden state '''
-        # Create two new tensors with sizes n_layers x batch_size x n_hidden,
-        # initialized to zero, for hidden state and cell state of LSTM
-        weight = next(self.parameters()).data
         
-        if (train_on_gpu):
-            hidden = (weight.new(self.num_layers, batch_size, self.hidden_size).zero_().cuda(),
-                  weight.new(self.num_layers, batch_size, self.hidden_size).zero_().cuda())
-        else:
-            hidden = (weight.new(self.num_layers, batch_size, self.hidden_size).zero_(),
-                      weight.new(self.num_layers, batch_size, self.hidden_size).zero_())
-        
-        return hidden
-    
     def sample(self, inputs, states=None, max_len=20):
         " accepts pre-processed image tensor (inputs) and returns predicted sentence (list of tensor ids of length max_len) "
         pass
