@@ -49,26 +49,26 @@ class DecoderRNN(nn.Module):
         
     
     def forward(self, features, captions):
- 
-        self.hidden = self.init_hidden(features.shape[0])
-        self.init_weights()
-        
-        # remove end token from cations
+        ''' Forward pass through the network '''
+        # remove end token from captions
         captions = captions[:,:-1]
         
+        # embedd captions
         caption_embeds = self.caption_embeddings(captions)
         
+        # concatenate the feature and caption embeds
         inputs = torch.cat((features.unsqueeze(1),caption_embeds),1)
         
-        out, self.hidden = self.lstm(inputs, self.hidden)
+        # the first value returned by LSTM is all of the hidden states throughout
+        # the sequence. the second is just the most recent hidden state
+        out, hidden = self.lstm(inputs)
         
         # pass out through a droupout layer
         out = self.dropout(out)
                                 
-        # put out through the fully-connected layer and sofmax
+        # put out through the fully-connected layer
         out = self.fc(out)
-        out = F.log_softmax(out, dim=1).data  
-             
+
         return out
         
     def init_weights(self):
