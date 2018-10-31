@@ -53,7 +53,7 @@ class DecoderRNN(nn.Module):
         # remove end token from captions
         captions = captions[:,:-1]
         
-        # embedd captions
+        # embed captions
         caption_embeds = self.caption_embeddings(captions)
         
         # concatenate the feature and caption embeds
