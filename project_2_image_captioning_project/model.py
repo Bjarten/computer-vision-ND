@@ -79,6 +79,22 @@ class DecoderRNN(nn.Module):
         self.fc.bias.data.fill_(0)
         # FC weights as random uniform
         self.fc.weight.data.uniform_(-1, 1)
+        
+        # init forget gate bias to 1
+        for names in self.lstm._all_weights:
+            for name in filter(lambda n: "bias" in n,  names):
+                bias = getattr(self.lstm, name)
+                n = bias.size(0)
+                start, end = n//4, n//2
+                bias.data[start:end].fill_(1.)
+        # "Importantly, adding a bias of size 1 significantly improved 
+        # the performance of the LSTM on tasks where it fell behind the 
+        # GRU and MUT1. Thus we recommend adding a bias of 1 to the forget 
+        # gate of every LSTM in every application; it is easy to do often 
+        # results in better performance on our tasks. This adjustment is 
+        # the simple improvement over the LSTM that we set out to discover."
+        # http://proceedings.mlr.press/v37/jozefowicz15.pdf
+        # https://discuss.pytorch.org/t/set-forget-gate-bias-of-lstm/1745/4
     
     def init_hidden(self, batch_size):
         ''' Initializes hidden state '''
