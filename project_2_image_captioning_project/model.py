@@ -73,8 +73,7 @@ class DecoderRNN(nn.Module):
         return out
         
     def init_weights(self):
-        ''' Initialize weights for fully connected layer '''
-        initrange = 0.1
+        ''' Initialize weights for fully connected layer and lstm forget gate bias'''
         
         # Set bias tensor to all 0.01
         self.fc.bias.data.fill_(0.01)
