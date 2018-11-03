@@ -44,8 +44,7 @@ class DecoderRNN(nn.Module):
                             
         # define the final, fully-connected output layer
         self.fc = nn.Linear(hidden_size, vocab_size)
-        
-                            
+                           
         # initialize the weights
         self.init_weights()
         
@@ -77,10 +76,10 @@ class DecoderRNN(nn.Module):
         ''' Initialize weights for fully connected layer '''
         initrange = 0.1
         
-        # Set bias tensor to all zeros
-        self.fc.bias.data.fill_(0)
-        # FC weights as random uniform
-        self.fc.weight.data.uniform_(-1, 1)
+        # Set bias tensor to all 0.01
+        self.fc.bias.data.fill_(0.01)
+        # FC weights as xavier normal
+        torch.nn.init.xavier_normal_(fc.weight)
         
         # init forget gate bias to 1
         for names in self.lstm._all_weights:
