@@ -29,7 +29,7 @@ from collections import OrderedDict
 
 class NaimishNet(nn.Module):
     def __init__(self, image_size, kernels = [5,5,3,3],out_channels = [32,64,128,256],
-                dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4], use_padding=True):
+                dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4], use_padding=True, use_maxp = True):
         super(NaimishNet, self).__init__() 
         # padding only support odd numbered kernels in this implementation
         self.use_padding = use_padding
@@ -54,46 +54,74 @@ class NaimishNet(nn.Module):
             ('conv1', nn.Conv2d(1, out_channels[0], kernel_size=kernels[0], padding=self.padding[0])),
             ('relu1', nn.ReLU())
             ])) # (32, 252, 252)                        
-
-        self.maxp1 = nn.Sequential(OrderedDict([
-            ('maxp1', nn.MaxPool2d(2, 2)),
-            ('dropout1', nn.Dropout(dropout_p[0])),
-            ('bachnorm1', nn.BatchNorm2d(out_channels[0]))
-            ])) # (32, 126, 126)
+        
+        if use_maxp:
+            self.maxp1 = nn.Sequential(OrderedDict([
+                ('maxp1', nn.MaxPool2d(2, 2)),
+                ('dropout1', nn.Dropout(dropout_p[0])),
+                ('bachnorm1', nn.BatchNorm2d(out_channels[0]))
+                ])) # (32, 126, 126)
+        else:
+            self.maxp1 = nn.Sequential(OrderedDict([
+                ('maxp1', nn.AvgPool2d(2, 2)),
+                ('dropout1', nn.Dropout(dropout_p[0])),
+                ('bachnorm1', nn.BatchNorm2d(out_channels[0]))
+                ])) # (32, 126, 126)
 
         self.conv2 = nn.Sequential(OrderedDict([
             ('conv2', nn.Conv2d(out_channels[0], out_channels[1], kernel_size=kernels[1], padding=self.padding[1])),
             ('relu2', nn.ReLU())
             ])) # (64, 122, 122)
-
-        self.maxp2 = nn.Sequential(OrderedDict([
-            ('maxp2', nn.MaxPool2d(2, 2)),
-            ('dropout2', nn.Dropout(dropout_p[1])),
-            ('bachnorm2', nn.BatchNorm2d(out_channels[1]))
-            ])) # (64, 61, 61)
-
+        
+        if use_maxp:
+            self.maxp2 = nn.Sequential(OrderedDict([
+                ('maxp2', nn.MaxPool2d(2, 2)),
+                ('dropout2', nn.Dropout(dropout_p[1])),
+                ('bachnorm2', nn.BatchNorm2d(out_channels[1]))
+                ])) # (64, 61, 61)
+        else:
+            self.maxp2 = nn.Sequential(OrderedDict([
+                ('maxp2', nn.AvgPool2d(2, 2)),
+                ('dropout2', nn.Dropout(dropout_p[1])),
+                ('bachnorm2', nn.BatchNorm2d(out_channels[1]))
+                ])) # (64, 61, 61)
+            
         self.conv3 = nn.Sequential(OrderedDict([
             ('conv3', nn.Conv2d(out_channels[1], out_channels[2], kernel_size=kernels[2], padding=self.padding[2])),
             ('relu3', nn.ReLU())
             ])) # (128, 59, 59)
 
-        self.maxp3 = nn.Sequential(OrderedDict([
-            ('maxp3', nn.MaxPool2d(2, 2)),
-            ('dropout3', nn.Dropout(dropout_p[2])),
-            ('bachnorm3', nn.BatchNorm2d(out_channels[2]))
-            ])) # (128, 29, 29)
-
+        if use_maxp:
+            self.maxp3 = nn.Sequential(OrderedDict([
+                ('maxp3', nn.MaxPool2d(2, 2)),
+                ('dropout3', nn.Dropout(dropout_p[2])),
+                ('bachnorm3', nn.BatchNorm2d(out_channels[2]))
+                ])) # (128, 29, 29)
+        else:
+            self.maxp3 = nn.Sequential(OrderedDict([
+                ('maxp3', nn.AvgPool2d(2, 2)),
+                ('dropout3', nn.Dropout(dropout_p[2])),
+                ('bachnorm3', nn.BatchNorm2d(out_channels[2]))
+                ])) # (128, 29, 29)
+            
         self.conv4 = nn.Sequential(OrderedDict([
             ('conv4', nn.Conv2d(out_channels[2], out_channels[3], kernel_size=kernels[3], padding=self.padding[3])),
             ('relu4', nn.ReLU())
             ])) # (256, 27, 27)
-
-        self.maxp4 = nn.Sequential(OrderedDict([
-            ('maxp4', nn.MaxPool2d(2, 2)),
-            ('dropout4', nn.Dropout(dropout_p[3])),
-            ('bachnorm4', nn.BatchNorm2d(out_channels[3]))
-            ]))  # (256, 13, 13)
-
+        
+        if use_maxp:
+            self.maxp4 = nn.Sequential(OrderedDict([
+                ('maxp4', nn.MaxPool2d(2, 2)),
+                ('dropout4', nn.Dropout(dropout_p[3])),
+                ('bachnorm4', nn.BatchNorm2d(out_channels[3]))
+                ]))  # (256, 13, 13)
+        else:
+            self.maxp4 = nn.Sequential(OrderedDict([
+                ('maxp4', nn.AvgPool2d(2, 2)),
+                ('dropout4', nn.Dropout(dropout_p[3])),
+                ('bachnorm4', nn.BatchNorm2d(out_channels[3]))
+                ]))  # (256, 13, 13)
+        
         self.fc1 = nn.Sequential(OrderedDict([
             ('fc1', nn.Linear(last_maxp_size, 1024)),
             ('relu5', nn.ReLU()),
