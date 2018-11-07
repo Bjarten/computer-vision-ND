@@ -125,7 +125,7 @@ class EyebrowsKeypointsDataset(Dataset):
 
         return sample
     
-class NoesKeypointsDataset(Dataset):
+class NoseKeypointsDataset(Dataset):
     """Face Landmarks dataset."""
 
     def __init__(self, csv_file, root_dir, transform=None):
