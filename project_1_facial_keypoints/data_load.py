@@ -209,6 +209,50 @@ class EyesKeypointsDataset(Dataset):
 
         return sample
     
+class MouthKeypointsDataset(Dataset):
+    """Face Landmarks dataset."""
+
+    def __init__(self, csv_file, root_dir, transform=None):
+        """
+        Args:
+            csv_file (string): Path to the csv file with annotations.
+            root_dir (string): Directory with all the images.
+            transform (callable, optional): Optional transform to be applied
+                on a sample.
+        """
+        self.key_pts_frame = pd.read_csv(csv_file)
+        self.key_pts_frame = self.key_pts_frame.loc[:, ['Unnamed: 0','96','97','98','99','100',
+                                                        '101','102','103','104','105','106','107',
+                                                        '108','109','110','111','112', '113', '114',
+                                                        '115','116','117','118','119', '120', '121',
+                                                        '122','123','124','125','126', '127', '128',
+                                                        '129','130','131','132','133', '134', '135',]]
+        print(self.key_pts_frame)
+        self.root_dir = root_dir
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.key_pts_frame)
+
+    def __getitem__(self, idx):
+        image_name = os.path.join(self.root_dir,
+                                self.key_pts_frame.iloc[idx, 0])
+        
+        image = mpimg.imread(image_name)
+        
+        # if image has an alpha color channel, get rid of it
+        if(image.shape[2] == 4):
+            image = image[:,:,0:3]
+        
+        key_pts = self.key_pts_frame.iloc[idx, 1:].values
+        key_pts = key_pts.astype('float').reshape(-1, 2)
+        sample = {'image': image, 'keypoints': key_pts}
+
+        if self.transform:
+            sample = self.transform(sample)
+
+        return sample
+    
 # tranforms
 
 class Normalize(object):
