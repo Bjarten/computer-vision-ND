@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
-train_on_gpu = True
+
 class EncoderCNN(nn.Module):
     def __init__(self, embed_size):
         super(EncoderCNN, self).__init__()
@@ -10,29 +10,22 @@ class EncoderCNN(nn.Module):
         for param in resnet.parameters():
             param.requires_grad_(False)
         
-        modules = list(resnet.children())[:-1]
+        modules = list(resnet.children())[:-1] # delete the last fc layer
         self.resnet = nn.Sequential(*modules)
         self.embed = nn.Linear(resnet.fc.in_features, embed_size)
-        self.batchnorm = nn.BatchNorm1d(embed_size)
+        self.bn = nn.BatchNorm1d(embed_size)
 
     def forward(self, images):
         features = self.resnet(images)
         features = features.view(features.size(0), -1)
         features = self.embed(features)
-        features = self.batchnorm(features)
+        features = self.bn(features)
         return features
     
-
 class DecoderRNN(nn.Module):
-    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=2, drop_prob=0.5):
+    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=2, drop_prob=0.2):
         super(DecoderRNN, self).__init__()
-        
-        self.embed_size = embed_size
-        self.hidden_size = hidden_size
-        self.vocab_size = vocab_size
-        self.num_layers = num_layers
-        self.drop_prob = drop_prob
-        
+                
         self.caption_embeddings = nn.Embedding(vocab_size, embed_size)
         
         # define the LSTM
@@ -44,13 +37,13 @@ class DecoderRNN(nn.Module):
                             
         # define the final, fully-connected output layer
         self.fc = nn.Linear(hidden_size, vocab_size)
-                           
+        
         # initialize the weights
         self.init_weights()
-        
     
     def forward(self, features, captions):
         ''' Forward pass through the network '''
+        
         # remove end token from captions
         captions = captions[:,:-1]
         
