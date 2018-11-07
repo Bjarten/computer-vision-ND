@@ -100,7 +100,6 @@ class EyebrowsKeypointsDataset(Dataset):
         self.key_pts_frame = self.key_pts_frame.loc[:, ['Unnamed: 0','34','35','36','37','38','39',
                                                         '40','41','42','43','44','45','46','47',
                                                         '48','49','50','51','52','53']]
-        print(self.key_pts_frame)
         self.root_dir = root_dir
         self.transform = transform
 
@@ -141,7 +140,6 @@ class NoesKeypointsDataset(Dataset):
         self.key_pts_frame = self.key_pts_frame.loc[:, ['Unnamed: 0','54','55','56','57','58',
                                                         '59','60','61','62','63','64','65','66',
                                                         '67','68','69','70','71']]
-        print(self.key_pts_frame)
         self.root_dir = root_dir
         self.transform = transform
 
@@ -183,7 +181,6 @@ class EyesKeypointsDataset(Dataset):
                                                         '77','78','79','80','81','82','83','84',
                                                         '85','86','87','88','89', '90', '91',
                                                         '92','93','94','95']]
-        print(self.key_pts_frame)
         self.root_dir = root_dir
         self.transform = transform
 
@@ -227,7 +224,6 @@ class MouthKeypointsDataset(Dataset):
                                                         '115','116','117','118','119', '120', '121',
                                                         '122','123','124','125','126', '127', '128',
                                                         '129','130','131','132','133', '134', '135',]]
-        print(self.key_pts_frame)
         self.root_dir = root_dir
         self.transform = transform
 
