@@ -28,7 +28,7 @@ from collections import OrderedDict
 # width_out = (width_in - kernel_size)/2 + 1
 
 class NaimishNet(nn.Module):
-    def __init__(self, image_size, kernels = [5,5,3,3],out_channels = [32,64,128,256],
+    def __init__(self, image_size, output_size = 136, kernels = [5,5,3,3],out_channels = [32,64,128,256],
                 dropout_p = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4], use_padding=True, use_maxp = True):
         super(NaimishNet, self).__init__() 
         # padding only support odd numbered kernels in this implementation
@@ -137,7 +137,7 @@ class NaimishNet(nn.Module):
             ])) # (1024, 1024)
 
         self.fc3 = nn.Sequential(OrderedDict([
-            ('fc3', nn.Linear(1024, 136))
+            ('fc3', nn.Linear(1024, output_size))
             ])) # (1024, 136)
 
     def forward(self, x):
