@@ -6,7 +6,7 @@ import torch.nn.functional as F
 class EncoderCNN(nn.Module):
     def __init__(self, embed_size):
         super(EncoderCNN, self).__init__()
-        resnet = models.resnet50(pretrained=True)
+        resnet = models.resnet18(pretrained=True)
         for param in resnet.parameters():
             param.requires_grad_(False)
         
@@ -93,7 +93,6 @@ class DecoderRNN(nn.Module):
         " accepts pre-processed image tensor (inputs) and returns predicted sentence (list of tensor ids of length max_len) "
         tokens = []
         for i in range(max_len):
-            # get 
             out, states = self.lstm(inputs, states)
             out = self.fc(out.squeeze(1))
             _, predicted = out.max(1) 
