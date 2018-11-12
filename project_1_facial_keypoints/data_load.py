@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 class FacialKeypointsDataset(Dataset):
     """Face Landmarks dataset."""
 
-    def __init__(self, csv_file, root_dir, transform=None):
+    def __init__(self, csv_file, root_dir, transform=None, subset=None):
         """
         Args:
             csv_file (string): Path to the csv file with annotations.
@@ -21,7 +21,16 @@ class FacialKeypointsDataset(Dataset):
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-        self.key_pts_frame = pd.read_csv(csv_file)
+       
+        self.key_pts_frame = pd.read_csv(csv_file)  
+        
+        if subset == 'mouth':
+            self.key_pts_frame = self.key_pts_frame.loc[:, ['Unnamed: 0','96','97','98','99','100',
+                                                        '101','102','103','104','105','106','107',
+                                                        '108','109','110','111','112', '113', '114',
+                                                        '115','116','117','118','119', '120', '121',
+                                                        '122','123','124','125','126', '127', '128',
+                                                        '129','130','131','132','133', '134', '135',]]     
         self.root_dir = root_dir
         self.transform = transform
 
@@ -38,7 +47,7 @@ class FacialKeypointsDataset(Dataset):
         if(image.shape[2] == 4):
             image = image[:,:,0:3]
         
-        key_pts = self.key_pts_frame.iloc[idx, 1:].values
+        key_pts = self.key_pts_frame.iloc[idx, 1:].values    
         key_pts = key_pts.astype('float').reshape(-1, 2)
         sample = {'image': image, 'keypoints': key_pts}
 
@@ -144,7 +153,9 @@ class FaceCrop(object):
         output_size (tuple or int): Desired output size. If int, square crop
             is made.
     """       
-    
+    def __init__(self, subset='face'):
+        self.subset = subset
+        
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
 
@@ -194,17 +205,25 @@ class FaceCrop(object):
             new_w = new_h
         else:
             new_h = new_w       
-         
-         # Check that padding dosent go outside the frame
+        
+        
+        if self.subset == 'face':
+            randsize1 = [30, 70]
+            randsize2 = [10, 29]
+            randsize3 = [1, 9]
+        elif self.subset == 'mouth':
+            randsize1 = [5, 15]
+        
+        # Check that padding dosent go outside the frame
         padding_x_1 = 0
         padding_x_2 = 0
         padding_y_1 = 0
         padding_y_2 = 0
         
-        padding_size_x_1 = random.randint(30,70)
-        padding_size_x_2 = random.randint(30,70)
-        padding_size_y_1 = random.randint(30,70)
-        padding_size_y_2 = random.randint(30,70)
+        padding_size_x_1 = random.randint(randsize1[0],randsize1[1])
+        padding_size_x_2 = random.randint(randsize1[0],randsize1[1])
+        padding_size_y_1 = random.randint(randsize1[0],randsize1[1])
+        padding_size_y_2 = random.randint(randsize1[0],randsize1[1])
         
         if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
            and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
@@ -213,10 +232,10 @@ class FaceCrop(object):
             padding_y_1 = padding_size_y_1
             padding_y_2 = padding_size_y_2
         else:
-            padding_size_x_1 = random.randint(10,29)
-            padding_size_x_2 = random.randint(10,29)
-            padding_size_2_1 = random.randint(10,29)
-            padding_size_y_2 = random.randint(10,29)
+            padding_size_x_1 = random.randint(randsize2[0],randsize2[1])
+            padding_size_x_2 = random.randint(randsize2[0],randsize2[1])
+            padding_size_2_1 = random.randint(randsize2[0],randsize2[1])
+            padding_size_y_2 = random.randint(randsize2[0],randsize2[1])
          
             if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
                and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
@@ -226,10 +245,10 @@ class FaceCrop(object):
                 padding_y_2 = padding_size_y_2
                 
             else:
-                padding_size_x_1 = random.randint(1,9)
-                padding_size_x_2 = random.randint(1,9)
-                padding_size_2_1 = random.randint(1,9)
-                padding_size_y_2 = random.randint(1,9)
+                padding_size_x_1 = random.randint(randsize3[0],randsize3[1])
+                padding_size_x_2 = random.randint(randsize3[0],randsize3[1])
+                padding_size_2_1 = random.randint(randsize3[0],randsize3[1])
+                padding_size_y_2 = random.randint(randsize3[0],randsize3[1])
          
                 if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
                    and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
