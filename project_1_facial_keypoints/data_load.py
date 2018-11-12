@@ -213,6 +213,8 @@ class FaceCrop(object):
             randsize3 = [1, 9]
         elif self.subset == 'mouth':
             randsize1 = [5, 15]
+            randsize2 = [3, 4]
+            randsize3 = [1, 2]
         
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
