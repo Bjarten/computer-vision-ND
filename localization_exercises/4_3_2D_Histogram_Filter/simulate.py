@@ -19,7 +19,7 @@ class Simulation(object):
 		self.colors = self.get_colors()
 		self.num_colors = len(self.colors)
 		if not start_pos:
-			self.true_pose = (self.height/2, self.width/2)
+			self.true_pose = (self.height//2, self.width//2)
 		else:
 			self.true_pose = start_pos
 		self.prev_pose = self.true_pose
