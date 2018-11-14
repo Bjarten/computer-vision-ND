@@ -1,3 +1,6 @@
+# Facial Keypoints project
+project_1_facial_keypoints/loss_log/*
+
 # YOLOY weights
 *.weights
 # Saved models
