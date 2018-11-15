@@ -2,10 +2,12 @@ import glob
 import os
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
 import numpy as np
 import matplotlib.image as mpimg
 import pandas as pd
 import cv2
+from PIL import Image
 
 import random
 import matplotlib.pyplot as plt
@@ -273,7 +275,7 @@ class ToTensor(object):
                 'keypoints': torch.from_numpy(key_pts)}
     
 class Random90DegFlip(object):
-    """Random vertical flip of image in sample"""
+    """Random 90 degree flip of image in sample"""
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
         
@@ -289,7 +291,7 @@ class Random90DegFlip(object):
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
 class RandomGamma(object):
-    """Random vertical flip of image in sample"""
+    """Random gamma of image in sample"""
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
         
@@ -297,6 +299,26 @@ class RandomGamma(object):
         key_pts_copy = np.copy(key_pts)
 
         image_copy = adjust_gamma(image_copy, gamma=random.uniform(0.8, 1.1)) 
+        
+        return {'image': image_copy, 'keypoints': key_pts_copy}
+    
+class ColorJitter(object):
+    """ColorJitter image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        color_jitter = transforms.ColorJitter(
+            brightness=0.4,
+            contrast=0.4,
+            saturation=0.4,)
+        
+        image_copy = np.copy(image)
+        
+        key_pts_copy = np.copy(key_pts)
+
+        image_copy = color_jitter(Image.fromarray(image_copy)) 
+       
+        image_copy = np.array(image_copy)
         
         return {'image': image_copy, 'keypoints': key_pts_copy}
     
