@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 class FacialKeypointsDataset(Dataset):
     """Face Landmarks dataset."""
 
-    def __init__(self, csv_file, root_dir, transform=None, subset=None):
+    def __init__(self, csv_file, root_dir, transform=None):
         """
         Args:
             csv_file (string): Path to the csv file with annotations.
@@ -23,14 +23,7 @@ class FacialKeypointsDataset(Dataset):
         """
        
         self.key_pts_frame = pd.read_csv(csv_file)  
-        
-        if subset == 'mouth':
-            self.key_pts_frame = self.key_pts_frame.loc[:, ['Unnamed: 0','96','97','98','99','100',
-                                                        '101','102','103','104','105','106','107',
-                                                        '108','109','110','111','112', '113', '114',
-                                                        '115','116','117','118','119', '120', '121',
-                                                        '122','123','124','125','126', '127', '128',
-                                                        '129','130','131','132','133', '134', '135',]]     
+    
         self.root_dir = root_dir
         self.transform = transform
 
@@ -153,8 +146,7 @@ class FaceCrop(object):
         output_size (tuple or int): Desired output size. If int, square crop
             is made.
     """       
-    def __init__(self, subset='face'):
-        self.subset = subset
+    def __init__(self):
         
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
@@ -206,16 +198,10 @@ class FaceCrop(object):
         else:
             new_h = new_w       
         
-        
-        if self.subset == 'face':
-            randsize1 = [30, 70]
-            randsize2 = [10, 29]
-            randsize3 = [1, 9]
-        elif self.subset == 'mouth':
-            randsize1 = [5, 15]
-            randsize2 = [3, 4]
-            randsize3 = [1, 2]
-        
+        randsize1 = [30, 70]
+        randsize2 = [10, 29]
+        randsize3 = [1, 9]
+
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
         padding_x_2 = 0
