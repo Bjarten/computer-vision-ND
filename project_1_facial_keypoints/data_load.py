@@ -50,8 +50,10 @@ class FacialKeypointsDataset(Dataset):
         return sample
     
 class Normalize(object):
-    """Convert a color image to grayscale and normalize the color range to [0,1]."""        
-
+    """Normalize the color range to [0,1] and convert a color image to grayscale if needed"""        
+    def __init__(self, color = False):
+        self.color = color
+    
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
         
@@ -59,7 +61,8 @@ class Normalize(object):
         key_pts_copy = np.copy(key_pts)
 
         # convert image to grayscale
-        image_copy = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        if not self.color:
+            image_copy = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # scale color range from [0, 255] to [0, 1]
         image_copy=  image_copy/255.0
@@ -146,7 +149,6 @@ class FaceCrop(object):
         output_size (tuple or int): Desired output size. If int, square crop
             is made.
     """       
-    def __init__(self):
         
     def __call__(self, sample):
         image, key_pts = sample['image'], sample['keypoints']
