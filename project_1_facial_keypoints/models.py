@@ -225,8 +225,7 @@ class vgg11_conv5_1(nn.Module):
         for param in vgg11.parameters():
             param.requires_grad_(False)
                     
-        modules = list(vgg11.children())[:-4] 
-        #modules = list(vgg11.children())
+        modules = list(vgg11.children())[:-3] 
         
         self.features = nn.Sequential(*modules)
        
@@ -238,8 +237,7 @@ class vgg11_conv5_1(nn.Module):
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(1024, 136))
-        
-                
+                       
     def forward(self, x):
         x = self.features(x)
         x = x.view(x.size(0), -1)
