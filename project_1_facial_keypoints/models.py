@@ -338,7 +338,7 @@ class vgg11_maxp3(nn.Module):
         self.features = nn.Sequential(*modules)
        
         self.keypoints_estimator =  nn.Sequential(
-            nn.Linear(401408, 1024),
+            nn.Linear(200704, 1024),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(1024, 1024),
