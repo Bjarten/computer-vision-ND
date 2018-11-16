@@ -219,7 +219,7 @@ class LeNet(nn.Module):
 
 class vgg11_conv5_1(nn.Module):
     def __init__(self):
-        super(vgg11_mod, self).__init__()
+        super(vgg11_conv5_1, self).__init__()
         vgg11 = models.vgg11(pretrained=True).features
         # freeze training for all layers
         for param in vgg11.parameters():
