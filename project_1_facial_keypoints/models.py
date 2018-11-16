@@ -351,3 +351,30 @@ class vgg11_maxp3(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.keypoints_estimator(x)
         return x
+    
+class vgg11_maxp2(nn.Module):
+    def __init__(self):
+        super(vgg11_maxp2, self).__init__()
+        vgg11 = models.vgg11(pretrained=True).features
+        # freeze training for all layers
+        for param in vgg11.parameters():
+            param.requires_grad_(False)
+                    
+        modules = list(vgg11.children())[:-15] 
+        
+        self.features = nn.Sequential(*modules)
+       
+        self.keypoints_estimator =  nn.Sequential(
+            nn.Linear(401408, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 136))
+                        
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        x = self.keypoints_estimator(x)
+        return x
