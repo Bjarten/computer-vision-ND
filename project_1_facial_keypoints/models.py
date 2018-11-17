@@ -232,10 +232,10 @@ class vgg11_conv5_1(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(100352, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                        
     def forward(self, x):
@@ -259,10 +259,10 @@ class vgg11_maxp4(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(100352, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                         
     def forward(self, x):
@@ -286,10 +286,10 @@ class vgg11_conv4_2(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(401408, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                         
     def forward(self, x):
@@ -313,10 +313,10 @@ class vgg11_conv4_1(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(401408, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                         
     def forward(self, x):
@@ -340,10 +340,10 @@ class vgg11_maxp3(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(200704, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                         
     def forward(self, x):
@@ -367,10 +367,10 @@ class vgg11_maxp2(nn.Module):
         self.keypoints_estimator =  nn.Sequential(
             nn.Linear(401408, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             nn.Linear(1024, 136))
                         
     def forward(self, x):
