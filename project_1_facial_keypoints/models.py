@@ -378,3 +378,14 @@ class vgg11_maxp2(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.keypoints_estimator(x)
         return x
+    
+class resnet18(nn.Module):
+    def __init__(self):
+        super(resnet18, self).__init__()
+        self.resnet18 = models.resnet18(pretrained=True)
+        n_inputs = self.resnet18.fc.in_features
+        self.resnet18.fc = nn.Linear(n_inputs, 136)
+                        
+    def forward(self, x):
+        x = self.resnet18(x)
+        return x
