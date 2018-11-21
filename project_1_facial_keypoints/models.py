@@ -424,3 +424,16 @@ class resnet50(nn.Module):
     def forward(self, x):
         x = self.resnet50(x)
         return x
+    
+class resnet50_grayscale(nn.Module):
+    def __init__(self):
+        super(resnet50_grayscale, self).__init__()
+        self.resnet50 = models.resnet50(pretrained=True)
+        # change from supporting color to gray scale images
+        self.resnet50.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+        n_inputs = self.resnet50.fc.in_features
+        self.resnet50.fc = nn.Linear(n_inputs, 136)
+                        
+    def forward(self, x):
+        x = self.resnet50(x)
+        return x
