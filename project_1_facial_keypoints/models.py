@@ -402,3 +402,25 @@ class resnet18_grayscale(nn.Module):
     def forward(self, x):
         x = self.resnet18(x)
         return x
+    
+class resnet18(nn.Module):
+    def __init__(self):
+        super(resnet18, self).__init__()
+        self.resnet18 = models.resnet18(pretrained=True)
+        n_inputs = self.resnet18.fc.in_features
+        self.resnet18.fc = nn.Linear(n_inputs, 136)
+                        
+    def forward(self, x):
+        x = self.resnet18(x)
+        return x
+    
+class resnet50(nn.Module):
+    def __init__(self):
+        super(resnet50, self).__init__()
+        self.resnet50 = models.resnet50(pretrained=True)
+        n_inputs = self.resnet50.fc.in_features
+        self.resnet50.fc = nn.Linear(n_inputs, 136)
+                        
+    def forward(self, x):
+        x = self.resnet50(x)
+        return x
