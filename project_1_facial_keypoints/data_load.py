@@ -72,7 +72,7 @@ class Normalize(object):
         
         # scale keypoints to be centered around 0 with a range of [-1, 1]
         # mean = 100, sqrt = 50, so, pts should be (pts - 100)/50
-        key_pts_copy = (key_pts_copy - image.shape[0]/2)/(image.shape[0]/4)
+        key_pts_copy = (key_pts_copy - image.shape[0]/2)/(image.shape[0]/2)
 
 
         return {'image': image_copy, 'keypoints': key_pts_copy}
@@ -255,6 +255,90 @@ class FaceCrop(object):
         key_pts = key_pts - [x - padding_x_1, y - padding_y_1] 
         
         return {'image': image_copy, 'keypoints': key_pts}
+    
+class FaceCropTight(object):
+    """ Crop out face using the keypoints as reference
+
+    Args:
+        output_size (tuple or int): Desired output size. If int, square crop
+            is made.
+    """       
+        
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+
+        image_copy = np.copy(image)
+        
+        h, w = image.shape[:2]
+        
+        x_max = 0
+        x_min = 10000
+        y_max = 0
+        y_min = 10000
+        
+        # Find the coordinates to keypoints at the far left, far right, top and bottom
+        # Also check that no keypoints are outside the image
+        for coord in key_pts:
+            if coord[0] > x_max:
+                if coord[0] >= w:
+                    x_max = w
+                else:
+                    x_max = coord[0]
+            if coord[0] < x_min:
+                if coord[0] < 0:
+                    x_min = 0
+                else:
+                    x_min = coord[0]
+            if coord[1] > y_max:
+                if coord[1] >= h:
+                    y_max = h
+                else:
+                    y_max = coord[1]
+            if coord[1] < y_min:
+                if coord[1] < 0:
+                    y_min = 0
+                else:
+                    y_min = coord[1]
+        
+        # Set the the left corner keypoint as out crop cooridnate
+        x = int(x_min)
+        y = int(y_min)
+        
+        # Get height and width of keypoint area
+        new_h = int(y_max - y_min)
+        new_w = int(x_max - x_min)
+        
+        #Set the smallest side equal to the largest since we want a square
+        if new_h > new_w:
+            new_w = new_h
+        else:
+            new_h = new_w       
+        
+        randsize1 = [3, 8]
+
+        # Check that padding dosent go outside the frame
+        padding_x_1 = 0
+        padding_x_2 = 0
+        padding_y_1 = 0
+        padding_y_2 = 0
+        
+        padding_size_x_1 = random.randint(randsize1[0],randsize1[1])
+        padding_size_x_2 = random.randint(randsize1[0],randsize1[1])
+        padding_size_y_1 = random.randint(randsize1[0],randsize1[1])
+        padding_size_y_2 = random.randint(randsize1[0],randsize1[1])
+        
+        if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
+           and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
+            padding_x_1 = padding_size_x_1
+            padding_x_2 = padding_size_x_2
+            padding_y_1 = padding_size_y_1
+            padding_y_2 = padding_size_y_2
+                 
+        image_copy = image_copy[y - padding_y_1: y + new_h + padding_y_2, x - padding_x_1: x + new_w + padding_x_2]     
+        
+        key_pts = key_pts - [x - padding_x_1, y - padding_y_1] 
+        
+        return {'image': image_copy, 'keypoints': key_pts}
 
 class ToTensor(object):
     """Convert ndarrays in sample to Tensors."""
@@ -330,4 +414,6 @@ def adjust_gamma(image, gamma=1.0):# build a lookup table mapping the pixel valu
  
     # apply gamma correction using the lookup table
     return cv2.LUT(image, table)
+
+
     
