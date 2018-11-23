@@ -314,7 +314,7 @@ class FaceCropTight(object):
         else:
             new_h = new_w       
         
-        randsize1 = [3, 8]
+        randsize1 = [5, 8]
 
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
@@ -554,5 +554,35 @@ class Rotate(object):
         
         return {'image': image_copy, 'keypoints': new_keypoints}
     
-
+class RandomRotate(object):
+    """Rotate image in sample by an angle"""
     
+    def __init__(self, rotation=30):
+        self.rotation = rotation
+    
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        image_copy = np.copy(image)
+        key_pts_copy = np.copy(key_pts)
+        
+        rows = image.shape[0]
+        cols = image.shape[1]
+        
+        M = cv2.getRotationMatrix2D((rows/2,cols/2),random.choice([0, self.rotation]),1)
+        image_copy = cv2.warpAffine(image_copy,M,(cols,rows))
+                
+        
+        key_pts_copy = key_pts_copy.reshape((1,136))
+        new_keypoints = np.zeros(136)
+        
+        for i in range(68):
+            coord_idx = 2*i
+            old_coord = key_pts_copy[0][coord_idx:coord_idx+2]
+            new_coord = np.matmul(M,np.append(old_coord,1))
+            new_keypoints[coord_idx] += new_coord[0]
+            new_keypoints[coord_idx+1] += new_coord[1]
+        
+        new_keypoints = new_keypoints.reshape((68,2))
+        
+        return {'image': image_copy, 'keypoints': new_keypoints}
