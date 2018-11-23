@@ -415,5 +415,106 @@ def adjust_gamma(image, gamma=1.0):# build a lookup table mapping the pixel valu
     # apply gamma correction using the lookup table
     return cv2.LUT(image, table)
 
+class RandomHorizontalFlip(object):
+    """Random horizontal flip of image in sample"""
+    def __call__(self, sample):
+        image, key_pts = sample['image'], sample['keypoints']
+        
+        image_copy = np.copy(image)
+        key_pts_copy = np.copy(key_pts)
 
+        if random.choice([0, 1]) <= 0.5:
+            # horizontally flip image
+            image_copy = np.fliplr(image_copy)          
+            # keypoints (x,y) = (-x,y)
+            key_pts_copy[:,0] = -key_pts_copy[:, 0]
+            # move keypoints form 2 kvadrant to 1 kvadrant
+            key_pts_copy[:,0] = key_pts_copy[:, 0] + image_copy.shape[1]
+
+            # since the keypoints are fliped around the y axis
+            # their placment are wrong int the keypoint array.
+            # E.g. the right eye and left eye is in the wrong place,
+            # so the keypoints need to be correctly mirrord in the list
+            
+            key_pts_copy_2 = np.copy(key_pts_copy)
+            
+            # mirror jawline 
+            key_pts_copy_2[16] = key_pts_copy[0]
+            key_pts_copy_2[15] = key_pts_copy[1]
+            key_pts_copy_2[14] = key_pts_copy[2]
+            key_pts_copy_2[13] = key_pts_copy[3]
+            key_pts_copy_2[12] = key_pts_copy[4]
+            key_pts_copy_2[11] = key_pts_copy[5]
+            key_pts_copy_2[10] = key_pts_copy[6]
+            key_pts_copy_2[9]  = key_pts_copy[7]
+            key_pts_copy_2[8]  = key_pts_copy[8]
+            key_pts_copy_2[7] = key_pts_copy[9] 
+            key_pts_copy_2[6] = key_pts_copy[10] 
+            key_pts_copy_2[5] = key_pts_copy[11]
+            key_pts_copy_2[4] = key_pts_copy[12]
+            key_pts_copy_2[3] = key_pts_copy[13]
+            key_pts_copy_2[2] = key_pts_copy[14]
+            key_pts_copy_2[1] = key_pts_copy[15]
+            key_pts_copy_2[0]  = key_pts_copy[16]
+            
+            # mirror eyebrowns
+            key_pts_copy_2[26] = key_pts_copy[17] 
+            key_pts_copy_2[25] = key_pts_copy[18] 
+            key_pts_copy_2[24] = key_pts_copy[19]
+            key_pts_copy_2[23] = key_pts_copy[20]
+            key_pts_copy_2[22] = key_pts_copy[21]
+            key_pts_copy_2[21] = key_pts_copy[22]
+            key_pts_copy_2[20] = key_pts_copy[23]
+            key_pts_copy_2[19] = key_pts_copy[24]
+            key_pts_copy_2[18] = key_pts_copy[25] 
+            key_pts_copy_2[17] = key_pts_copy[26]
+            
+            # mirror nose tip
+            key_pts_copy_2[35] = key_pts_copy[31] 
+            key_pts_copy_2[34] = key_pts_copy[32] 
+            key_pts_copy_2[33] = key_pts_copy[33]
+            key_pts_copy_2[32] = key_pts_copy[34]
+            key_pts_copy_2[31] = key_pts_copy[35]
+            
+            # mirror eyes
+            key_pts_copy_2[45] = key_pts_copy[36]
+            key_pts_copy_2[44] = key_pts_copy[37] 
+            key_pts_copy_2[43] = key_pts_copy[38]
+            key_pts_copy_2[42] = key_pts_copy[39]
+            key_pts_copy_2[47] = key_pts_copy[40]
+            key_pts_copy_2[46] = key_pts_copy[41] 
+            key_pts_copy_2[39] = key_pts_copy[42] 
+            key_pts_copy_2[38] = key_pts_copy[43]
+            key_pts_copy_2[37] = key_pts_copy[44]
+            key_pts_copy_2[36] = key_pts_copy[45]
+            key_pts_copy_2[41] = key_pts_copy[46] 
+            key_pts_copy_2[40] = key_pts_copy[47] 
+   
+            # mirror lips
+            key_pts_copy_2[54] = key_pts_copy[48]
+            key_pts_copy_2[53] = key_pts_copy[49] 
+            key_pts_copy_2[52] = key_pts_copy[50]
+            key_pts_copy_2[51] = key_pts_copy[51]
+            key_pts_copy_2[50] = key_pts_copy[52]
+            key_pts_copy_2[49] = key_pts_copy[53] 
+            key_pts_copy_2[48] = key_pts_copy[54]
+            
+            key_pts_copy_2[59] = key_pts_copy[55]
+            key_pts_copy_2[58] = key_pts_copy[56]
+            key_pts_copy_2[57] = key_pts_copy[57]
+            key_pts_copy_2[56] = key_pts_copy[58] 
+            key_pts_copy_2[55] = key_pts_copy[59]
+            
+            key_pts_copy_2[64] = key_pts_copy[60]
+            key_pts_copy_2[63] = key_pts_copy[61] 
+            key_pts_copy_2[62] = key_pts_copy[62]
+            key_pts_copy_2[61] = key_pts_copy[63]
+            key_pts_copy_2[60] = key_pts_copy[64]
+            
+            key_pts_copy_2[67] = key_pts_copy[65] 
+            key_pts_copy_2[66] = key_pts_copy[66] 
+            key_pts_copy_2[65] = key_pts_copy[67]
+
+            
+        return {'image': image_copy, 'keypoints': key_pts_copy_2}
     
