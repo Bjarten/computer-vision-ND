@@ -202,7 +202,7 @@ class FaceCrop(object):
         else:
             new_h = new_w       
         
-        randsize1 = [30, 70]
+        randsize1 = [30, 40]
         randsize2 = [10, 29]
         randsize3 = [5, 9]
 
@@ -216,14 +216,12 @@ class FaceCrop(object):
         padding_size_x_2 = random.randint(randsize1[0],randsize1[1])
         padding_size_y_1 = random.randint(randsize1[0],randsize1[1])
         padding_size_y_2 = random.randint(randsize1[0],randsize1[1])
-        print('test')
         if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
            and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
             padding_x_1 = padding_size_x_1
             padding_x_2 = padding_size_x_2
             padding_y_1 = padding_size_y_1
             padding_y_2 = padding_size_y_2
-            print('2')
         else:
             padding_size_x_1 = random.randint(randsize2[0],randsize2[1])
             padding_size_x_2 = random.randint(randsize2[0],randsize2[1])
@@ -236,7 +234,6 @@ class FaceCrop(object):
                 padding_x_2 = padding_size_x_2
                 padding_y_1 = padding_size_y_1
                 padding_y_2 = padding_size_y_2
-                print('4')
                 
             else:
                 padding_size_x_1 = random.randint(randsize3[0],randsize3[1])
@@ -250,7 +247,6 @@ class FaceCrop(object):
                     padding_x_2 = padding_size_x_2
                     padding_y_1 = padding_size_y_1
                     padding_y_2 = padding_size_y_2 
-                    print('6')
         
         
         image_copy = image_copy[y - padding_y_1: y + new_h + padding_y_2, x - padding_x_1: x + new_w + padding_x_2]     
