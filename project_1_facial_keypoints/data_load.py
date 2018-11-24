@@ -204,7 +204,7 @@ class FaceCrop(object):
         
         randsize1 = [30, 70]
         randsize2 = [10, 29]
-        randsize3 = [1, 9]
+        randsize3 = [5, 9]
 
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
@@ -216,17 +216,18 @@ class FaceCrop(object):
         padding_size_x_2 = random.randint(randsize1[0],randsize1[1])
         padding_size_y_1 = random.randint(randsize1[0],randsize1[1])
         padding_size_y_2 = random.randint(randsize1[0],randsize1[1])
-        
+        print('test')
         if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
            and x + new_w + padding_size_x_2 < w and y + new_h + padding_size_y_2 < h):
             padding_x_1 = padding_size_x_1
             padding_x_2 = padding_size_x_2
             padding_y_1 = padding_size_y_1
             padding_y_2 = padding_size_y_2
+            print('2')
         else:
             padding_size_x_1 = random.randint(randsize2[0],randsize2[1])
             padding_size_x_2 = random.randint(randsize2[0],randsize2[1])
-            padding_size_2_1 = random.randint(randsize2[0],randsize2[1])
+            padding_size_y_1 = random.randint(randsize2[0],randsize2[1])
             padding_size_y_2 = random.randint(randsize2[0],randsize2[1])
          
             if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
@@ -235,6 +236,7 @@ class FaceCrop(object):
                 padding_x_2 = padding_size_x_2
                 padding_y_1 = padding_size_y_1
                 padding_y_2 = padding_size_y_2
+                print('4')
                 
             else:
                 padding_size_x_1 = random.randint(randsize3[0],randsize3[1])
@@ -248,6 +250,7 @@ class FaceCrop(object):
                     padding_x_2 = padding_size_x_2
                     padding_y_1 = padding_size_y_1
                     padding_y_2 = padding_size_y_2 
+                    print('6')
         
         
         image_copy = image_copy[y - padding_y_1: y + new_h + padding_y_2, x - padding_x_1: x + new_w + padding_x_2]     
@@ -314,7 +317,7 @@ class FaceCropTight(object):
         else:
             new_h = new_w       
         
-        randsize1 = [5, 8]
+        randsize1 = [5, 10]
 
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
@@ -511,7 +514,7 @@ class RandomHorizontalFlip(object):
             key_pts_copy_2[62] = key_pts_copy[62]
             key_pts_copy_2[61] = key_pts_copy[63]
             key_pts_copy_2[60] = key_pts_copy[64]
-            
+                 
             key_pts_copy_2[67] = key_pts_copy[65] 
             key_pts_copy_2[66] = key_pts_copy[66] 
             key_pts_copy_2[65] = key_pts_copy[67]
@@ -569,7 +572,7 @@ class RandomRotate(object):
         rows = image.shape[0]
         cols = image.shape[1]
         
-        M = cv2.getRotationMatrix2D((rows/2,cols/2),random.choice([0, self.rotation]),1)
+        M = cv2.getRotationMatrix2D((rows/2,cols/2),random.choice([-self.rotation, self.rotation]),1)
         image_copy = cv2.warpAffine(image_copy,M,(cols,rows))
                 
         
