@@ -202,9 +202,9 @@ class FaceCrop(object):
         else:
             new_h = new_w       
         
-        randsize1 = [30, 40]
-        randsize2 = [10, 29]
-        randsize3 = [5, 9]
+        randsize1 = [2, 70]
+        randsize2 = [2, 30]
+        randsize3 = [1, 10]
 
         # Check that padding dosent go outside the frame
         padding_x_1 = 0
@@ -238,7 +238,7 @@ class FaceCrop(object):
             else:
                 padding_size_x_1 = random.randint(randsize3[0],randsize3[1])
                 padding_size_x_2 = random.randint(randsize3[0],randsize3[1])
-                padding_size_2_1 = random.randint(randsize3[0],randsize3[1])
+                padding_size_y_1 = random.randint(randsize3[0],randsize3[1])
                 padding_size_y_2 = random.randint(randsize3[0],randsize3[1])
          
                 if(y - padding_size_y_1 > 0 and x - padding_size_x_1 > 0
