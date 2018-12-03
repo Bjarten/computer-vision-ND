@@ -45,7 +45,6 @@ def display_world(world_size, position, landmarks=None):
     
     # Display final result
     plt.show()
-
     
 # --------
 # this routine makes the robot data
