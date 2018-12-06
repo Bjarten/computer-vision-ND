@@ -437,3 +437,25 @@ class resnet50_grayscale(nn.Module):
     def forward(self, x):
         x = self.resnet50(x)
         return x
+    
+class squeezenet_grayscale(nn.Module):
+    def __init__(self):
+        super(squeezenet_grayscale, self).__init__()
+
+        squeezenet1_1 = models.squeezenet1_1(pretrained=True).features
+        modules = list(squeezenet1_1.children()) 
+   
+        # change from supporting color to gray scale images
+        modules[0] = nn.Conv2d(1, 64, kernel_size=(3, 3), stride=(2, 2))
+        
+        self.features = nn.Sequential(*modules)
+        self.classifier =  nn.Sequential(
+            nn.Dropout(0.5),
+            nn.Conv2d(512, 136, kernel_size=(1, 1), stride=(1, 1)),
+            nn.ReLU(inplace=True),
+            nn.AvgPool2d(kernel_size=13, stride=1, padding=0))
+                       
+    def forward(self, x):
+        x = self.features(x)
+        x = self.classifier(x)
+        return x.view(x.size(0), 136)
