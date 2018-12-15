@@ -15,7 +15,7 @@ In this project, I design and train a CNN-RNN (Convolutional Neural Network - Re
 The Udacity repository for this project: [CVND---Image-Captioning-Project](https://github.com/udacity/CVND---Image-Captioning-Project)
 
 ## Project 3: Landmark Detection
-In this project, I implement SLAM (Simultaneous Localization and Mapping) for a 2 dimensional world.
+In this project, I implement SLAM (Simultaneous Localization and Mapping) for a 2-dimensional world.  Sensor and motion data gathered by a simulated robot is used to create a map of an environment. SLAM gives us a way to track the location of a robot in the world in real-time and identify the locations of landmarks such as buildings, trees, rocks, etc.
 
 The Udacity repository for this project: [Project_Landmark Detection](https://github.com/udacity/CVND_Localization_Exercises/tree/master/Project_Landmark%20Detection)
 
@@ -32,4 +32,4 @@ This folder contains the exercises for the Object Tracking and Localization part
 ### README TODO
 - [ ] Add an image and/or a GIF from the Facial Keypoint Detection project
 - [ ] Add an image and/or a GIF from the Landmark Detection project
-- [ ] Write better description for Project 3: Landmark Detection
+- [x] Write better description for Project 3: Landmark Detection
