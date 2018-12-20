@@ -3,11 +3,16 @@ This repository was created for the [Computer Vision Nanodegree ](https://www.ud
 
 ## Project 1: Facial Keypoint Detection
 
+[Facial Keypoint Detection Project](project_1_facial_keypoints)<br/>
+
 In this project, I build a facial keypoint detection system. The system consists of a face detector that uses Haar Cascades and a Convolutional Neural Network (CNN) that predict the facial keypoints in the detected faces. The facial keypoint detection system takes in any image with faces and predicts the location of 68 distinguishing keypoints on each face.
 
 The Udacity repository for this project: [P1_Facial_Keypoints](https://github.com/udacity/P1_Facial_Keypoints)
 
 ## Project 2: Image Captioning
+
+[Image Captioning Project](project_2_image_captioning_project)<br/>
+
 In this project, I design and train a CNN-RNN (Convolutional Neural Network - Recurrent Neural Network) model for  automatically generating image captions. The network is trained on the Microsoft Common Objects in COntext [(MS COCO)](http://cocodataset.org/#home) dataset. The image captioning model is displayed below.
 
 ![Image Captioning Model](images/cnn_rnn_model.png?raw=true) [Image source](https://arxiv.org/pdf/1411.4555.pdf)
@@ -15,13 +20,25 @@ In this project, I design and train a CNN-RNN (Convolutional Neural Network - Re
 The Udacity repository for this project: [CVND---Image-Captioning-Project](https://github.com/udacity/CVND---Image-Captioning-Project)
 
 ## Project 3: Landmark Detection
+
+[Landmark Detection Project](project_3_landmark_detection)<br/>
+
 In this project, I implement SLAM (Simultaneous Localization and Mapping) for a 2-dimensional world.  Sensor and motion data gathered by a simulated robot is used to create a map of an environment. SLAM gives us a way to track the location of a robot in the world in real-time and identify the locations of landmarks such as buildings, trees, rocks, etc.
 
 The Udacity repository for this project: [Project_Landmark Detection](https://github.com/udacity/CVND_Localization_Exercises/tree/master/Project_Landmark%20Detection)
 
 ## Exercises
 
-This folder contains the exercises for this course. The original notes can be found in the Udacity [CVND_Exercises](https://github.com/udacity/CVND_Exercises) repo.
+[Image Representation](exercises/1_1_Image_Representation)<br/>
+[Convolutional Filters Edge Detection](exercises/1_2_Convolutional_Filters_Edge_Detection)<br/>
+[Types of Features Image Segmentation](exercises/1_3_Types_of_Features_Image_Segmentation)<br/>
+[Feature Vectors](exercises/1_4_Feature_Vectors)<br/>
+[CNN Layers](exercises/1_5_CNN_Layers)<br/>
+[YOLO](exercises/2_2_YOLO)<br/>
+[LSTMs](exercises/2_4_LSTMs)<br/>
+[Attention](exercises/2_6_Attention)<br/>
+
+The original notes can be found in the Udacity [CVND_Exercises](https://github.com/udacity/CVND_Exercises) repo.
 
 ##  Localization Exercises
 
