@@ -42,7 +42,16 @@ The original notes can be found in the Udacity [CVND_Exercises](https://github.c
 
 ##  Localization Exercises
 
-This folder contains the exercises for the Object Tracking and Localization part of the course. The original notes can be found in the Udacity [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) repo.
+[optical-flow](localization_exercises/4_1_Optical_Flow)<br/>
+[robot-localization](localization_exercises/4_2_Robot_Localization)<br/>
+[2D-histogram-filter](localization_exercises/4_3_2D_Histogram_Filter)<br/>
+[kalman-filters](localization_exercises/4_4_Kalman_Filters)<br/>
+[state-and-motion](localization_exercises/4_5_State_and_Motion)<br/>
+[matrices-and-transformation-of-state](localization_exercises/4_6_Matrices_and_Transformation_of_State)<br/>
+[SLAM](localization_exercises/4_7_SLAM)<br/>
+[vehicle-motion-and-calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus)<br/>
+
+The original notes can be found in the Udacity [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) repo.
 
 
 
