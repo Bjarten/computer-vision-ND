@@ -6,5 +6,4 @@ In this project, I implement SLAM (Simultaneous Localization and Mapping) for a 
 
 ---
 
-#### The Udacity repository for this project:
-[Project_Landmark Detection](https://github.com/udacity/CVND_Localization_Exercises/tree/master/Project_Landmark%20Detection)
+The Udacity repository for this project: [Project_Landmark Detection](https://github.com/udacity/CVND_Localization_Exercises/tree/master/Project_Landmark%20Detection)

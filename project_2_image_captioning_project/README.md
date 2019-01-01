@@ -33,5 +33,4 @@ Here are some predictions from my model.
 There are 500 predictions in the samples folder.
 
 ---
-#### The Udacity repository for this project:
- [CVND---Image-Captioning-Project](https://github.com/udacity/CVND---Image-Captioning-Project)
+The Udacity repository for this project: [CVND---Image-Captioning-Project](https://github.com/udacity/CVND---Image-Captioning-Project)

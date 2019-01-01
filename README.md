@@ -34,7 +34,7 @@ The Udacity repository for this project: [Project_Landmark Detection](https://gi
 [image-representation](exercises/1_1_Image_Representation)<br/>
 [convolutional-filters-edge-detection](exercises/1_2_Convolutional_Filters_Edge_Detection)<br/>
 [types-of-features-image-segmentation](exercises/1_3_Types_of_Features_Image_Segmentation)<br/>
-[seature-vectors](exercises/1_4_Feature_Vectors)<br/>
+[feature-vectors](exercises/1_4_Feature_Vectors)<br/>
 [CNN-layers](exercises/1_5_CNN_Layers)<br/>
 [YOLO](exercises/2_2_YOLO)<br/>
 [LSTMs](exercises/2_4_LSTMs)<br/>
