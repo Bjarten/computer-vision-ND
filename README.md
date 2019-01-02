@@ -64,10 +64,3 @@ The original notes can be found in the Udacity [CVND_Exercises](https://github.c
 [vehicle-motion-and-calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus)<br/>
 
 The original notes can be found in the Udacity [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) repo.
-
-
-
-### README TODO
-- [ ] Add an image and/or a GIF from the Facial Keypoint Detection project
-- [ ] Add an image and/or a GIF from the Landmark Detection project
-- [x] Write better description for Project 3: Landmark Detection
