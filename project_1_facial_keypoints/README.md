@@ -1,7 +1,5 @@
 # Project 1: Facial Keypoint Detection
 
-[Facial Keypoint Detection Project](project_1_facial_keypoints)<br/>
-
 In this project, I build a facial keypoint detection system. The system consists of a face detector that uses Haar Cascades and a Convolutional Neural Network (CNN) that predict the facial keypoints in the detected faces. The facial keypoint detection system takes in any image with faces and predicts the location of 68 distinguishing keypoints on each face.
 
 
@@ -18,7 +16,7 @@ Here are the predicted keypoints using the resnet model on the provided test ima
 
 ### Webcam app
 
-In addition to testing the model on the test images, I developed a small webcam application that runs in a notebook, you can find it [here](Keypoint Webcam.ipynb). The application detects a face your webcam feed and uses the model to predict the keypoints and draws a simple mask onto the face. The app has decent performance on my face, and runs with around 4-5 FPS on my computer.
+In addition to testing the model on the test images, I developed a small webcam application that runs in a notebook, you can find it [here](project_1_facial_keypoints/Keypoint Webcam.ipynb). The application detects a face your webcam feed and uses the model to predict the keypoints and draws a simple mask onto the face. The app has decent performance on my face, and runs with around 4-5 FPS on my computer.
 
 <img src="videos_and_gifs/face_mask_test.gif?" width="512"><br>
 
