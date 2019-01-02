@@ -7,6 +7,11 @@ This repository was created for the [Computer Vision Nanodegree ](https://www.ud
 
 In this project, I build a facial keypoint detection system. The system consists of a face detector that uses Haar Cascades and a Convolutional Neural Network (CNN) that predict the facial keypoints in the detected faces. The facial keypoint detection system takes in any image with faces and predicts the location of 68 distinguishing keypoints on each face.
 
+Some results from my facial keypoint detection system:
+
+<img src="images/beatles_resnet.png" width="512">
+<img src="gifs/face_mask_test.gif?" width="512"><br>
+
 The Udacity repository for this project: [P1_Facial_Keypoints](https://github.com/udacity/P1_Facial_Keypoints)
 
 ## Project 2: Image Captioning
@@ -16,6 +21,11 @@ The Udacity repository for this project: [P1_Facial_Keypoints](https://github.co
 In this project, I design and train a CNN-RNN (Convolutional Neural Network - Recurrent Neural Network) model for  automatically generating image captions. The network is trained on the Microsoft Common Objects in COntext [(MS COCO)](http://cocodataset.org/#home) dataset. The image captioning model is displayed below.
 
 ![Image Captioning Model](images/cnn_rnn_model.png?raw=true) [Image source](https://arxiv.org/pdf/1411.4555.pdf)
+
+One good and one not so good sample made by my model:
+
+![sample_171](images/sample_171.png?raw=true)<br/>
+![sample_193](images/sample_193.png?raw=true)<br/>
 
 The Udacity repository for this project: [CVND---Image-Captioning-Project](https://github.com/udacity/CVND---Image-Captioning-Project)
 
