@@ -50,17 +50,18 @@ The Udacity repository for this project: [Project_Landmark Detection](https://gi
 * [LSTMs](exercises/2_4_LSTMs) - Learned about Long Short-Term Memory Networks (LSTM), and similar architectures which have the benefits of preserving long-term memory. Implemented a Character-Level LSTM model. 
 * [Attention Mechanisms](exercises/2_6_Attention) -  Todo.
 
-The original notes can be found in the Udacity [CVND_Exercises](https://github.com/udacity/CVND_Exercises) repo.
+The Udacity repository for the exercises: [CVND_Exercises](https://github.com/udacity/CVND_Exercises)
 
 ##  Localization Exercises
 
-* [optical-flow](localization_exercises/4_1_Optical_Flow)<br/>
-* [robot-localization](localization_exercises/4_2_Robot_Localization)<br/>
-* [2D-histogram-filter](localization_exercises/4_3_2D_Histogram_Filter)<br/>
-* [kalman-filters](localization_exercises/4_4_Kalman_Filters)<br/>
-* [state-and-motion](localization_exercises/4_5_State_and_Motion)<br/>
-* [matrices-and-transformation-of-state](localization_exercises/4_6_Matrices_and_Transformation_of_State)<br/>
-* [SLAM](localization_exercises/4_7_SLAM)<br/>
-* [vehicle-motion-and-calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus)<br/>
+* [Optical Flow](localization_exercises/4_1_Optical_Flow) - Learned about and implemented Optical Flow.
+* [Robot Localization](localization_exercises/4_2_Robot_Localization) - Learned how to implement a Bayesian filter to locate a robot in space and represent uncertainty in robot motion.
+* [Mini-project: 2D Histogram Filter](localization_exercises/4_3_2D_Histogram_Filter) - 
+Wrote sense and move functions for a (and debugged) a 2D histogram filter.
+* [Introduction to Kalman Filters](localization_exercises/4_4_Kalman_Filters) - Learned the intuition behind the Kalman Filter, a vehicle tracking algorithm, and implemented a one-dimensional tracker.
+* [Representing State and Motion](localization_exercises/4_5_State_and_Motion) - Learned to represent the state of a car in a vector that can be modified using linear algebra.
+* [Matrices and Transformation of State](localization_exercises/4_6_Matrices_and_Transformation_of_State) -  Learned about the matrix operations that underly multidimensional Kalman Filters.
+* [Simultaneous Localization and Mapping (SLAM)](localization_exercises/4_7_SLAM) - Learned how to implement SLAM: simultaneously localize an autonomous vehicle and create a map of landmarks in an environment.
+* [Vehicle Motion and Calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus) - Review of basic of calculus and learned how to derive the x and y components of a self-driving car's motion from sensor measurements and other data.
 
-The original notes can be found in the Udacity [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) repo.
+The Udacity repository for the exercises: [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) 
