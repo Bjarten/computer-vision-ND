@@ -41,26 +41,26 @@ The Udacity repository for this project: [Project_Landmark Detection](https://gi
 
 ## Exercises
 
-[image-representation](exercises/1_1_Image_Representation)<br/>
-[convolutional-filters-edge-detection](exercises/1_2_Convolutional_Filters_Edge_Detection)<br/>
-[types-of-features-image-segmentation](exercises/1_3_Types_of_Features_Image_Segmentation)<br/>
-[feature-vectors](exercises/1_4_Feature_Vectors)<br/>
-[CNN-layers](exercises/1_5_CNN_Layers)<br/>
-[YOLO](exercises/2_2_YOLO)<br/>
-[LSTMs](exercises/2_4_LSTMs)<br/>
-[attention](exercises/2_6_Attention)<br/>
+* [Image Representation & Classification](exercises/1_1_Image_Representation) - Learned how images are represented numerically and implemented image processing techniques, such as color masking and binary classification.
+* [Convolutional Filters and Edge Detection](exercises/1_2_Convolutional_Filters_Edge_Detection) - Learned about frequency in images and implemented my own image filters for detecting edges and shapes in an image. Used Haar cascade classifiers from the OpenCV library to perform face detection.
+* [Types of Features & Image Segmentation](exercises/1_3_Types_of_Features_Image_Segmentation) - Programmed a corner detector and learned techniques, like k-means clustering, for segmenting an image into unique parts. 
+* [Feature Vectors](exercises/1_4_Feature_Vectors) - Learned how to describe objects and images using feature vectors (ORB, FAST, BRIEF, HOG).
+* [CNN Layers and Feature Visualization](exercises/1_5_CNN_Layers) - Defined and trained my own convolution neural network for clothing recognition. Used feature visualization techniques to see what the network had learned.
+* [YOLO](exercises/2_2_YOLO) - Learned about the YOLO (You Only Look Once) multi-object detection model and worked with a YOLO implementation. Implemented YOLO to work with my webcam. 
+* [LSTMs](exercises/2_4_LSTMs) - Learned about Long Short-Term Memory Networks (LSTM), and similar architectures which have the benefits of preserving long-term memory. Implemented a Character-Level LSTM model. 
+* [Attention Mechanisms](exercises/2_6_Attention) -  Todo.
 
 The original notes can be found in the Udacity [CVND_Exercises](https://github.com/udacity/CVND_Exercises) repo.
 
 ##  Localization Exercises
 
-[optical-flow](localization_exercises/4_1_Optical_Flow)<br/>
-[robot-localization](localization_exercises/4_2_Robot_Localization)<br/>
-[2D-histogram-filter](localization_exercises/4_3_2D_Histogram_Filter)<br/>
-[kalman-filters](localization_exercises/4_4_Kalman_Filters)<br/>
-[state-and-motion](localization_exercises/4_5_State_and_Motion)<br/>
-[matrices-and-transformation-of-state](localization_exercises/4_6_Matrices_and_Transformation_of_State)<br/>
-[SLAM](localization_exercises/4_7_SLAM)<br/>
-[vehicle-motion-and-calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus)<br/>
+* [optical-flow](localization_exercises/4_1_Optical_Flow)<br/>
+* [robot-localization](localization_exercises/4_2_Robot_Localization)<br/>
+* [2D-histogram-filter](localization_exercises/4_3_2D_Histogram_Filter)<br/>
+* [kalman-filters](localization_exercises/4_4_Kalman_Filters)<br/>
+* [state-and-motion](localization_exercises/4_5_State_and_Motion)<br/>
+* [matrices-and-transformation-of-state](localization_exercises/4_6_Matrices_and_Transformation_of_State)<br/>
+* [SLAM](localization_exercises/4_7_SLAM)<br/>
+* [vehicle-motion-and-calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus)<br/>
 
 The original notes can be found in the Udacity [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) repo.
