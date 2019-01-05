@@ -41,27 +41,26 @@ The Udacity repository for this project: [Project_Landmark Detection](https://gi
 
 ## Exercises
 
-* [Image Representation & Classification](exercises/1_1_Image_Representation) - Learned how images are represented numerically and implemented image processing techniques, such as color masking and binary classification.
-* [Convolutional Filters and Edge Detection](exercises/1_2_Convolutional_Filters_Edge_Detection) - Learned about frequency in images and implemented my own image filters for detecting edges and shapes in an image. Used Haar cascade classifiers from the OpenCV library to perform face detection.
-* [Types of Features & Image Segmentation](exercises/1_3_Types_of_Features_Image_Segmentation) - Programmed a corner detector and learned techniques, like k-means clustering, for segmenting an image into unique parts. 
-* [Feature Vectors](exercises/1_4_Feature_Vectors) - Learned how to describe objects and images using feature vectors (ORB, FAST, BRIEF, HOG).
-* [CNN Layers and Feature Visualization](exercises/1_5_CNN_Layers) - Defined and trained my own convolution neural network for clothing recognition. Used feature visualization techniques to see what the network had learned.
-* [YOLO](exercises/2_2_YOLO) - Learned about the YOLO (You Only Look Once) multi-object detection model and worked with a YOLO implementation. Implemented YOLO to work with my webcam. 
-* [LSTMs](exercises/2_4_LSTMs) - Learned about Long Short-Term Memory Networks (LSTM), and similar architectures which have the benefits of preserving long-term memory. Implemented a Character-Level LSTM model. 
+* [Image Representation & Classification](exercises/1_1_Image_Representation) - In this exercise, I learn how images are represented numerically and implement image processing techniques, such as color masking and binary classification.
+* [Convolutional Filters and Edge Detection](exercises/1_2_Convolutional_Filters_Edge_Detection) - In this exercise, I learn about frequency in images and implement my own image filters for detecting edges and shapes in an image. Use Haar cascade classifiers from the OpenCV library to perform face detection.
+* [Types of Features & Image Segmentation](exercises/1_3_Types_of_Features_Image_Segmentation) - In this exercise, I program a corner detector and learn techniques, like k-means clustering, for segmenting an image into unique parts. 
+* [Feature Vectors](exercises/1_4_Feature_Vectors) - In this exercise, I learn how to describe objects and images using feature vectors (ORB, FAST, BRIEF, HOG).
+* [CNN Layers and Feature Visualization](exercises/1_5_CNN_Layers) - In this exercise, I define and train my own convolution neural network for clothing recognition. Learn to use feature visualization techniques to see what the network had learned.
+* [YOLO](exercises/2_2_YOLO) - In this exercise, I learn about the YOLO (You Only Look Once) multi-object detection model and work with a YOLO implementation. Implement YOLO to work with my webcam.
+* [LSTMs](exercises/2_4_LSTMs) - In this exercise, I learn about Long Short-Term Memory Networks (LSTM), and similar architectures which have the benefits of preserving long-term memory. Implement a Character-Level LSTM model. 
 * [Attention Mechanisms](exercises/2_6_Attention) -  Todo.
 
 The Udacity repository for the exercises: [CVND_Exercises](https://github.com/udacity/CVND_Exercises)
 
 ##  Localization Exercises
 
-* [Optical Flow](localization_exercises/4_1_Optical_Flow) - Learned about and implemented Optical Flow.
-* [Robot Localization](localization_exercises/4_2_Robot_Localization) - Learned how to implement a Bayesian filter to locate a robot in space and represent uncertainty in robot motion.
-* [Mini-project: 2D Histogram Filter](localization_exercises/4_3_2D_Histogram_Filter) - 
-Wrote sense and move functions for a (and debugged) a 2D histogram filter.
-* [Introduction to Kalman Filters](localization_exercises/4_4_Kalman_Filters) - Learned the intuition behind the Kalman Filter, a vehicle tracking algorithm, and implemented a one-dimensional tracker.
-* [Representing State and Motion](localization_exercises/4_5_State_and_Motion) - Learned to represent the state of a car in a vector that can be modified using linear algebra.
-* [Matrices and Transformation of State](localization_exercises/4_6_Matrices_and_Transformation_of_State) -  Learned about the matrix operations that underly multidimensional Kalman Filters.
-* [Simultaneous Localization and Mapping (SLAM)](localization_exercises/4_7_SLAM) - Learned how to implement SLAM: simultaneously localize an autonomous vehicle and create a map of landmarks in an environment.
-* [Vehicle Motion and Calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus) - Review of basic of calculus and learned how to derive the x and y components of a self-driving car's motion from sensor measurements and other data.
+* [Optical Flow](localization_exercises/4_1_Optical_Flow) - In this exercise, I learn about and implement Optical Flow.
+* [Robot Localization](localization_exercises/4_2_Robot_Localization) - In this exercise, I learn how to implement a Bayesian filter to locate a robot in space and represent uncertainty in robot motion.
+* [Mini-project: 2D Histogram Filter](localization_exercises/4_3_2D_Histogram_Filter) - In this exercise, I write sense and move functions for a (and debug) 2D histogram filter.
+* [Introduction to Kalman Filters](localization_exercises/4_4_Kalman_Filters) - In this exercise, I learn the intuition behind the Kalman Filter, a vehicle tracking algorithm, and implement a one-dimensional tracker.
+* [Representing State and Motion](localization_exercises/4_5_State_and_Motion) - In this exercise, I learn to represent the state of a car in a vector that can be modified using linear algebra.
+* [Matrices and Transformation of State](localization_exercises/4_6_Matrices_and_Transformation_of_State) - In this exercise, I learn about the matrix operations that underly multidimensional Kalman Filters.
+* [Simultaneous Localization and Mapping (SLAM)](localization_exercises/4_7_SLAM) - In this exercise, I learn how to implement SLAM: simultaneously localize an autonomous vehicle and create a map of landmarks in an environment.
+* [Vehicle Motion and Calculus](localization_exercises/4_8_Vehicle_Motion_and_Calculus) - In this exercise, I review some basic calculus and learn how to derive the x and y components of a self-driving car's motion from sensor measurements and other data.
 
 The Udacity repository for the exercises: [CVND_Localization_Exercises](https://github.com/udacity/CVND_Localization_Exercises) 
