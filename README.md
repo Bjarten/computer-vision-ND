@@ -1,5 +1,5 @@
-# Computer-Vision-ND
-This repository was created for the [Computer Vision Nanodegree ](https://www.udacity.com/course/computer-vision-nanodegree--nd891) at [Udacity](https://Udacity.com).
+# Computer Vision Nanodegree
+This repository contains my exercises and projects for the [Computer Vision Nanodegree ](https://www.udacity.com/course/computer-vision-nanodegree--nd891) at [Udacity](https://Udacity.com).
 
 ## Project 1: Facial Keypoint Detection
 
